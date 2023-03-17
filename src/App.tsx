@@ -1,9 +1,9 @@
-import Authorization from "./components/Authorization";
+import Registration from "./components/Registration";
 
 function App() {
   return (
     <>
-      <Authorization />
+      <Registration />
     </>
   );
 }
