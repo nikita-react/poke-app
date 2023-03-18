@@ -115,6 +115,15 @@ code {
     monospace;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  line-height: normal;
+}
+
 article,
 aside,
 details,
@@ -132,7 +141,6 @@ section {
 ol,
 ul {
   list-style: none;
-  padding-left: 0 !important;
 }
 
 blockquote,
@@ -161,6 +169,12 @@ table {
   border-spacing: 0;
 }
 
+button {
+  background: none;
+  border: none;
+  padding: 0;
+}
+
 img {
   border: 0;
   max-width: 100%;
@@ -168,7 +182,6 @@ img {
 
 a {
   text-decoration: none;
-  color: #0000ff;
 }
 
 a:hover {

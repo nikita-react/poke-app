@@ -10,51 +10,43 @@ import styles from "../../styles/Form.module.scss";
 import supabase from "../../client";
 import validationSchema from "../../validators/auth";
 import { useStyles } from "../../styles/InputUseStales";
-import { useNavigate, Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-type RegistrationValues = {
+type LoginValues = {
   email: string;
   password: string;
-  confirmPassword: string;
 };
 
-export default function RegistrationForm() {
+export default function LoginForm() {
   const navigate = useNavigate();
 
-  const { control, register, handleSubmit } = useForm<RegistrationValues>();
+  const { control, register, handleSubmit } = useForm<LoginValues>();
   const classes = useStyles();
   const { errors } = useFormState({
     control,
   });
 
-  const onSubmit: SubmitHandler<RegistrationValues> = (dataForm) => {
+  const onSubmit: SubmitHandler<LoginValues> = (dataForm) => {
     const { email, password } = dataForm;
-    registration(email, password);
+    login(email, password);
   };
 
-  const registration = async (
-    email: string,
-    password: string
-  ): Promise<void> => {
+  const login = async (email: string, password: string): Promise<void> => {
     try {
-      const { data, error } = await supabase.auth.signUp({
+      const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
-
 
       if (error) {
         throw new Error(error.message);
       }
 
       if (data) {
-
-        // navigate("/login");
+        navigate("/");
       }
-      console.log('Data', data);
+      console.log("Data", data);
       // console.log('Error', error);
-
-
     } catch (error) {
       console.error("Error:", error);
     }
@@ -63,7 +55,7 @@ export default function RegistrationForm() {
   return (
     <div className={styles.formWrapper}>
       <div className={styles.formInnerWrapper}>
-        <h1 className={styles.h1}>Registration</h1>
+        <h1 className={styles.h1}>Login</h1>
         <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
           <Controller
             control={control}
@@ -103,42 +95,20 @@ export default function RegistrationForm() {
               />
             )}
           />
-          <Controller
-            control={control}
-            name="confirmPassword"
-            defaultValue={""}
-            render={({ field: { onChange, value } }) => (
-              <TextField
-                type="password"
-                id="outlined-basic"
-                label="Confirm the password"
-                variant="outlined"
-                {...register("confirmPassword", {
-                  ...validationSchema.confirmPassword,
-                })}
-                value={value}
-                onChange={onChange}
-                helperText={errors.confirmPassword?.message}
-                error={!!errors.confirmPassword?.message}
-                className={classes.field}
-              />
-            )}
-          />
+
           <Button className="self-end" type="submit" variant="contained">
             Submit
           </Button>
         </form>
-
         <div>
-          <p className="mb-2 ">do you already have an account?</p>
-          <Link to='/login'>
-            <Button size="small" variant="contained" color="success">Go to login page</Button>
+          <p className="mb-2 ">don't have an account?</p>
+          <Link to="/registration">
+            <Button size="small" variant="contained" color="success">
+              Go to registration page
+            </Button>
           </Link>
-
         </div>
-
       </div>
-
     </div>
   );
 }

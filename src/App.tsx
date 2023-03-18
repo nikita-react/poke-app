@@ -1,11 +1,9 @@
-import Registration from "./components/Registration";
+import React from "react";
+import Routing from "./Routes";
 
-function App() {
+const App: React.FC = () => {
   return (
-    <>
-      <Registration />
-    </>
-  );
+    <Routing />
+  )
 }
-
-export default App;
+export default App

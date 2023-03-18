@@ -1,0 +1,13 @@
+.formWrapper {
+  @apply container flex flex-col items-center justify-center h-screen px-5 mx-auto;
+
+  .formInnerWrapper {
+    @apply w-full max-w-xs gap-4 flex flex-col;
+  }
+  h1 {
+    @apply text-4xl font-semibold;
+  }
+  .form {
+    @apply flex flex-col   gap-6;
+  }
+}
