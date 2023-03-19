@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useEffect } from "react";
+import supabase from "../../client";
 
 const Home: React.FC = () => {
-    return (
-        <div>
-            <h1>Home</h1>
-        </div>
-    )
-}
-export default Home
+  return (
+    <div>
+      <h1>Home</h1>
+    </div>
+  );
+};
+export default Home;

@@ -11,6 +11,8 @@ import supabase from "../../client";
 import validationSchema from "../../validators/auth";
 import { useStyles } from "../../styles/InputUseStales";
 import { useNavigate, Link } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 type RegistrationValues = {
   email: string;
@@ -18,17 +20,18 @@ type RegistrationValues = {
   confirmPassword: string;
 };
 
-export default function RegistrationForm() {
+const RegistrationForm = () => {
   const navigate = useNavigate();
-
   const { control, register, handleSubmit } = useForm<RegistrationValues>();
   const classes = useStyles();
+
   const { errors } = useFormState({
     control,
   });
 
   const onSubmit: SubmitHandler<RegistrationValues> = (dataForm) => {
     const { email, password } = dataForm;
+
     registration(email, password);
   };
 
@@ -36,32 +39,55 @@ export default function RegistrationForm() {
     email: string,
     password: string
   ): Promise<void> => {
+    const toastId = toast.loading("Promise", {
+      position: "top-center",
+      autoClose: 10000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
     try {
       const { data, error } = await supabase.auth.signUp({
         email,
         password,
       });
 
-
       if (error) {
         throw new Error(error.message);
       }
 
       if (data) {
-
-        // navigate("/login");
+        toast.update(toastId, {
+          render: "All is good",
+          type: "success",
+          isLoading: false,
+        });
+        setTimeout(() => {
+          navigate("/login");
+        }, 3000);
       }
-      console.log('Data', data);
-      // console.log('Error', error);
-
-
     } catch (error) {
-      console.error("Error:", error);
+      toast.update(toastId, {
+        render: (
+          <>
+            <p>This email already exists </p>
+            <Link to="/login" className="text-blue-600 ">
+              go to login page
+            </Link>
+          </>
+        ),
+        type: "error",
+        isLoading: false,
+      });
     }
   };
 
   return (
     <div className={styles.formWrapper}>
+      <ToastContainer />
       <div className={styles.formInnerWrapper}>
         <h1 className={styles.h1}>Registration</h1>
         <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
@@ -125,20 +151,21 @@ export default function RegistrationForm() {
             )}
           />
           <Button className="self-end" type="submit" variant="contained">
-            Submit
+            Create an account
           </Button>
         </form>
 
         <div>
           <p className="mb-2 ">do you already have an account?</p>
-          <Link to='/login'>
-            <Button size="small" variant="contained" color="success">Go to login page</Button>
+          <Link to="/login">
+            <Button size="small" variant="contained" color="success">
+              Go to login page
+            </Button>
           </Link>
-
         </div>
-
       </div>
-
     </div>
   );
-}
+};
+
+export default RegistrationForm;

@@ -11,15 +11,16 @@ import supabase from "../../client";
 import validationSchema from "../../validators/auth";
 import { useStyles } from "../../styles/InputUseStales";
 import { Link, useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 type LoginValues = {
   email: string;
   password: string;
 };
 
-export default function LoginForm() {
+const LoginForm = () => {
   const navigate = useNavigate();
-
   const { control, register, handleSubmit } = useForm<LoginValues>();
   const classes = useStyles();
   const { errors } = useFormState({
@@ -32,6 +33,16 @@ export default function LoginForm() {
   };
 
   const login = async (email: string, password: string): Promise<void> => {
+    const toastId = toast.loading("Promise", {
+      position: "top-center",
+      autoClose: 10000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
     try {
       const { data, error } = await supabase.auth.signInWithPassword({
         email,
@@ -43,17 +54,37 @@ export default function LoginForm() {
       }
 
       if (data) {
-        navigate("/");
+        localStorage.setItem("PokeApp", JSON.stringify(data.session));
+        toast.update(toastId, {
+          render: "All is good",
+          type: "success",
+          isLoading: false,
+        });
+        setTimeout(() => {
+          navigate("/");
+        }, 3000);
       }
-      console.log("Data", data);
-      // console.log('Error', error);
     } catch (error) {
-      console.error("Error:", error);
+      toast.update(toastId, {
+        render: (
+          <>
+            <p>Password or email is incorrect.</p>
+            <p>If you have forgotten your password, click </p>
+            <Link to="/login" className="text-blue-600 ">
+              reset password
+            </Link>
+          </>
+        ),
+        type: "error",
+        isLoading: false,
+      });
     }
   };
 
   return (
     <div className={styles.formWrapper}>
+      <ToastContainer />
+
       <div className={styles.formInnerWrapper}>
         <h1 className={styles.h1}>Login</h1>
         <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
@@ -97,7 +128,7 @@ export default function LoginForm() {
           />
 
           <Button className="self-end" type="submit" variant="contained">
-            Submit
+            Sing in
           </Button>
         </form>
         <div>
@@ -111,4 +142,6 @@ export default function LoginForm() {
       </div>
     </div>
   );
-}
+};
+
+export default LoginForm;
