@@ -13,6 +13,7 @@ import { useStyles } from "../../styles/InputUseStales";
 import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import createAuthToast from "../Toasts/authToast";
 
 type LoginValues = {
   email: string;
@@ -33,16 +34,7 @@ const LoginForm = () => {
   };
 
   const login = async (email: string, password: string): Promise<void> => {
-    const toastId = toast.loading("Promise", {
-      position: "top-center",
-      autoClose: 10000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-    });
+    const toastId = createAuthToast();
     try {
       const { data, error } = await supabase.auth.signInWithPassword({
         email,
@@ -56,7 +48,7 @@ const LoginForm = () => {
       if (data) {
         localStorage.setItem("PokeApp", JSON.stringify(data.session));
         toast.update(toastId, {
-          render: "All is good",
+          render: "Login Successful",
           type: "success",
           isLoading: false,
         });
@@ -69,7 +61,7 @@ const LoginForm = () => {
         render: (
           <>
             <p>Password or email is incorrect.</p>
-            <p>If you have forgotten your password, click </p>
+            <span>If you have forgotten your password, click </span>
             <Link to="/login" className="text-blue-600 ">
               reset password
             </Link>
@@ -84,7 +76,6 @@ const LoginForm = () => {
   return (
     <div className={styles.formWrapper}>
       <ToastContainer />
-
       <div className={styles.formInnerWrapper}>
         <h1 className={styles.h1}>Login</h1>
         <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>

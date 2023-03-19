@@ -1,5 +1,4 @@
-import React, { useEffect } from "react";
-import supabase from "../../client";
+import React from "react";
 
 const Home: React.FC = () => {
   return (

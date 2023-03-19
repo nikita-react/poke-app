@@ -13,6 +13,7 @@ import { useStyles } from "../../styles/InputUseStales";
 import { useNavigate, Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import createAuthToast from "../Toasts/authToast";
 
 type RegistrationValues = {
   email: string;
@@ -39,16 +40,8 @@ const RegistrationForm = () => {
     email: string,
     password: string
   ): Promise<void> => {
-    const toastId = toast.loading("Promise", {
-      position: "top-center",
-      autoClose: 10000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-    });
+    const toastId = createAuthToast();
+
     try {
       const { data, error } = await supabase.auth.signUp({
         email,
@@ -61,7 +54,7 @@ const RegistrationForm = () => {
 
       if (data) {
         toast.update(toastId, {
-          render: "All is good",
+          render: "Registration Successful",
           type: "success",
           isLoading: false,
         });
