@@ -46,7 +46,6 @@ const LoginForm = () => {
       }
 
       if (data) {
-        localStorage.setItem("PokeApp", JSON.stringify(data.session));
         toast.update(toastId, {
           render: "Login Successful",
           type: "success",

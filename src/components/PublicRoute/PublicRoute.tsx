@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Outlet, Navigate } from "react-router-dom";
-import getUserTokenData from "../../auth/userTokenData";
+import { SessionContext } from "../../context";
 
 const PublicRoutes: React.FC = () => {
-  return <>{getUserTokenData() ? <Outlet /> : <Navigate to="/" />};</>;
+  const session = useContext(SessionContext);
+
+  return <>{session === null ? <Outlet /> : <Navigate to="/" />};</>;
 };
 
 export default PublicRoutes;
