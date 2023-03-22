@@ -60,10 +60,6 @@ const LoginForm = () => {
         render: (
           <>
             <p>Password or email is incorrect.</p>
-            <span>If you have forgotten your password, click </span>
-            <Link to="/login" className="text-blue-600 ">
-              reset password
-            </Link>
           </>
         ),
         type: "error",
