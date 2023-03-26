@@ -14,6 +14,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import createAuthToast from "../Toasts/authToast";
+import Layout from "../Layout";
 
 type RegistrationValues = {
   email: string;
@@ -79,7 +80,7 @@ const RegistrationForm = () => {
   };
 
   return (
-    <div className={styles.formWrapper}>
+    <Layout styles={styles.formWrapper}>
       <ToastContainer />
       <div className={styles.formInnerWrapper}>
         <h1 className={styles.h1}>Registration</h1>
@@ -91,7 +92,7 @@ const RegistrationForm = () => {
             render={({ field: { onChange, value } }) => (
               <TextField
                 type="email"
-                id="outlined-basic"
+                id="email"
                 label="Email"
                 variant="outlined"
                 {...register("email", { ...validationSchema.email })}
@@ -110,7 +111,7 @@ const RegistrationForm = () => {
             render={({ field: { onChange, value } }) => (
               <TextField
                 type="password"
-                id="outlined-basic"
+                id="password"
                 label="Password"
                 variant="outlined"
                 {...register("password", { ...validationSchema.password })}
@@ -129,7 +130,7 @@ const RegistrationForm = () => {
             render={({ field: { onChange, value } }) => (
               <TextField
                 type="password"
-                id="outlined-basic"
+                id="confirm-password"
                 label="Confirm the password"
                 variant="outlined"
                 {...register("confirmPassword", {
@@ -157,7 +158,7 @@ const RegistrationForm = () => {
           </Link>
         </div>
       </div>
-    </div>
+    </Layout>
   );
 };
 

@@ -14,6 +14,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import createAuthToast from "../Toasts/authToast";
+import Layout from "../Layout";
 
 type LoginValues = {
   email: string;
@@ -51,9 +52,6 @@ const LoginForm = () => {
           type: "success",
           isLoading: false,
         });
-        setTimeout(() => {
-          navigate("/");
-        }, 3000);
       }
     } catch (error) {
       toast.update(toastId, {
@@ -69,7 +67,7 @@ const LoginForm = () => {
   };
 
   return (
-    <div className={styles.formWrapper}>
+    <Layout styles={styles.formWrapper}>
       <ToastContainer />
       <div className={styles.formInnerWrapper}>
         <h1 className={styles.h1}>Login</h1>
@@ -81,7 +79,7 @@ const LoginForm = () => {
             render={({ field: { onChange, value } }) => (
               <TextField
                 type="email"
-                id="outlined-basic"
+                id="email"
                 label="Email"
                 variant="outlined"
                 {...register("email", { ...validationSchema.email })}
@@ -100,7 +98,7 @@ const LoginForm = () => {
             render={({ field: { onChange, value } }) => (
               <TextField
                 type="password"
-                id="outlined-basic"
+                id="password"
                 label="Password"
                 variant="outlined"
                 {...register("password", { ...validationSchema.password })}
@@ -126,7 +124,7 @@ const LoginForm = () => {
           </Link>
         </div>
       </div>
-    </div>
+    </Layout>
   );
 };
 
