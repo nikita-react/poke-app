@@ -12,8 +12,8 @@ const Routing: React.FC = () => {
     <>
       <Routes>
         <Route element={<PublicRoutes />}>
-          <Route path="registration" element={<Registration />} />
-          <Route path="login" element={<Login />} />
+          <Route path="/registration" element={<Registration />} />
+          <Route path="/login" element={<Login />} />
         </Route>
         <Route path="/" element={<PrivateRoutes />}>
           <Route index element={<Home />} />

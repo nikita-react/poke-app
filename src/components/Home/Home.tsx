@@ -1,15 +1,14 @@
 import React from "react";
-import supabase from "../../client";
+import Layout from "../Layout";
+import Footer from "../Footer";
+import Header from "../Header";
 
 const Home: React.FC = () => {
-  const signOut = async () => {
-    const { error } = await supabase.auth.signOut();
-  };
   return (
-    <div>
-      <h1>Home</h1>
-      <button onClick={signOut}>sign out</button>
-    </div>
+    <Layout styles="flex	justify-between flex-col">
+      <Header />
+      <Footer />
+    </Layout>
   );
 };
 export default Home;
