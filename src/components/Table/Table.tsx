@@ -1,5 +1,4 @@
-import * as React from "react";
-import { useEffect, useState } from "react";
+import { FC } from "react";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -8,80 +7,17 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import { useGQLQuery } from "../../hooks/useGQLQuery";
-import { GET_POKEMONS } from "../../queries";
-import { useParams } from "react-router-dom";
-import { useNavigate, useLocation } from "react-router-dom";
-import { log } from "console";
+import { TableData, Pokemon } from "../../types";
 
-interface Column {
-  id: "id" | "name" | "height" | "experience" | "default" | "image";
-  label: string;
-  align?: "right" | "center";
-}
-const columns: readonly Column[] = [
-  { id: "id", label: "Id" },
-  { id: "name", label: "Name" },
-  { id: "height", label: "Height", align: "right" },
-  { id: "experience", label: "Experience", align: "right" },
-  { id: "default", label: "Default", align: "right" },
-  { id: "image", label: "Image", align: "center" },
-];
-interface Pokemon {
-  id: number;
-  name: string;
-  height: number;
-  base_experience: number;
-  is_default: boolean;
-}
-
-interface Data {
-  pokemon_v2_pokemon: Pokemon[];
-  pokemon_v2_pokemon_aggregate: {
-    aggregate: {
-      count: number;
-    };
-  };
-}
-
-const StickyHeadTable: React.FC = () => {
-  const { id } = useParams();
-  const navigate = useNavigate();
-  const location = useLocation();
-  const [page, setPage] = useState(Number(id) > 1 ? Number(id) : 0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
-
-  const gqlVariables = {
-    offset: Number((page + 1) * rowsPerPage - rowsPerPage),
-    limit: rowsPerPage,
-  };
-
-  const { data, refetch } = useGQLQuery<Data>(
-    ["pokemons"],
-    GET_POKEMONS,
-    gqlVariables
-  );
-
-  const handleChangePage = (event: unknown, newPage: number) => {
-    setPage(newPage);
-    const segments = location.pathname.split("/");
-    const baseSegments = segments.slice(0, segments.indexOf("page") + 1);
-    const base = baseSegments.join("/");
-
-    navigate(`${base}/${newPage}`);
-  };
-
-  const handleChangeRowsPerPage = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setRowsPerPage(+event.target.value);
-
-    setPage(0);
-  };
-
-  useEffect(() => {
-    refetch();
-  }, [page, rowsPerPage]);
+const MUITable: FC<TableData> = ({
+  columns,
+  data,
+  page,
+  rowsPerPage,
+  id,
+  handleChangeRowsPerPage,
+  handleChangePage,
+}) => {
   return (
     <Paper
       className="container mx-auto"
@@ -121,6 +57,7 @@ const StickyHeadTable: React.FC = () => {
                     <TableCell>
                       <img
                         className="mx-auto"
+                        alt={pokemon.name}
                         src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png`}
                       />
                     </TableCell>
@@ -149,4 +86,4 @@ const StickyHeadTable: React.FC = () => {
   );
 };
 
-export default StickyHeadTable;
+export default MUITable;

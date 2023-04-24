@@ -1,2 +1,2 @@
-import DataTable from "./Table";
-export default DataTable;
+import MUITable from "./Table";
+export default MUITable;
