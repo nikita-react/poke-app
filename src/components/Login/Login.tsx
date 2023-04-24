@@ -10,7 +10,7 @@ import styles from "../../styles/Form.module.scss";
 import supabase from "../../client";
 import validationSchema from "../../validators/auth";
 import { useStyles } from "../../styles/InputUseStales";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import createAuthToast from "../Toasts/authToast";
@@ -22,7 +22,6 @@ type LoginValues = {
 };
 
 const LoginForm = () => {
-  const navigate = useNavigate();
   const { control, register, handleSubmit } = useForm<LoginValues>();
   const classes = useStyles();
   const { errors } = useFormState({

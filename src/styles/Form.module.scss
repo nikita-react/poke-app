@@ -1,5 +1,5 @@
 .formWrapper {
-  @apply container flex flex-col items-center justify-center px-5 mx-auto;
+  @apply flex container flex-col items-center justify-center px-5 mx-auto;
 
   .formInnerWrapper {
     @apply w-full max-w-xs gap-4 flex flex-col;

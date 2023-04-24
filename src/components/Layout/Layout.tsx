@@ -1,9 +1,13 @@
 import React from "react";
 
-const Layout: React.FC<{
+type LayoutProps = {
   children: JSX.Element | JSX.Element[];
-  styles: string;
-}> = ({ children, styles }) => {
-  return <div className={`min-h-screen ${styles}`}>{children}</div>;
+  styles?: string;
+};
+
+const Layout: React.FC<LayoutProps> = ({ children, styles }) => {
+  return (
+    <div className={`min-h-screen  ${styles ? styles : ""}`}>{children}</div>
+  );
 };
 export default Layout;
