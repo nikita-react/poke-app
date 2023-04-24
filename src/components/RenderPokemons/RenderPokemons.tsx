@@ -36,11 +36,12 @@ const RenderPokemons: React.FC = () => {
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
-    const segments = location.pathname.split("/");
-    const baseSegments = segments.slice(0, segments.indexOf("page") + 1);
-    const base = baseSegments.join("/");
+    console.log(newPage);
 
-    navigate(`${base}/${newPage}`);
+    const segments = location.pathname.split("/");
+    const baseSegments = segments.slice(0, segments.indexOf("pokemons") + 1);
+    const base = baseSegments.join("/");
+    navigate(`${base}/page/${newPage + 1}`);
   };
 
   const handleChangeRowsPerPage = (
