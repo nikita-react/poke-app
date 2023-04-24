@@ -62,8 +62,8 @@ const Navbar = () => {
   };
 
   const links = [
-    { label: "Pokemons", href: "#" },
-    { label: "Compare", href: "#" },
+    { label: "Pokemons", href: "/pokemons" },
+    { label: "Compare", href: "/compare" },
     { label: "History", href: "#" },
     { label: "Places", href: "#" },
   ];

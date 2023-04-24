@@ -1,7 +1,7 @@
 import React from "react";
 import Registration from "../components/Registration";
 import Login from "../components/Login";
-import Home from "../components/Home";
+import PokemonsPage from "../components/PokemonsPage";
 import NotFound from "../components/NotFound";
 import { Routes, Route, useLocation } from "react-router-dom";
 import PrivateRoutes from "../components/PrivateRoute";
@@ -18,8 +18,8 @@ const Routing: React.FC = () => {
           <Route path="/login" element={<Login />} />
         </Route>
         <Route path="/pokemons" element={<PrivateRoutes />}>
-          <Route index element={<Home />} />
-          <Route path="page/:id" element={<Home />} />
+          <Route index element={<PokemonsPage />} />
+          <Route path="page/:id" element={<PokemonsPage />} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>

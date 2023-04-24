@@ -4,7 +4,7 @@ import Footer from "../Footer";
 import Header from "../Header";
 import RenderPokemons from "../RenderPokemons";
 
-const Home: FC = () => {
+const PokemonsPage: FC = () => {
   return (
     <Layout styles="flex justify-between flex-col gap-5	">
       <Header />
@@ -14,4 +14,4 @@ const Home: FC = () => {
   );
 };
 
-export default Home;
+export default PokemonsPage;
