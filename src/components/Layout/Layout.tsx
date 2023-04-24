@@ -7,7 +7,7 @@ type LayoutProps = {
 
 const Layout: React.FC<LayoutProps> = ({ children, styles }) => {
   return (
-    <div className={`min-h-screen ${styles ? styles : ""}`}>{children}</div>
+    <div className={`min-h-screen  ${styles ? styles : ""}`}>{children}</div>
   );
 };
 export default Layout;
