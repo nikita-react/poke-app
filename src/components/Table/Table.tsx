@@ -8,6 +8,7 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import { TableData, Pokemon } from "../../types";
+import { useNavigate } from "react-router-dom";
 
 const MUITable: FC<TableData> = ({
   columns,
@@ -15,9 +16,12 @@ const MUITable: FC<TableData> = ({
   page,
   rowsPerPage,
   id,
+  navigateUrl,
   handleChangeRowsPerPage,
   handleChangePage,
 }) => {
+  const navigate = useNavigate();
+
   return (
     <Paper
       className="container mx-auto"
@@ -46,7 +50,14 @@ const MUITable: FC<TableData> = ({
                     key={pokemon.id}
                   >
                     <TableCell>{pokemon.id}</TableCell>
-                    <TableCell>{pokemon.name}</TableCell>
+                    <TableCell>
+                      <span
+                        className="cursor-pointer hover:underline "
+                        onClick={() => navigate(`${navigateUrl}/${pokemon.id}`)}
+                      >
+                        {pokemon.name}
+                      </span>
+                    </TableCell>
                     <TableCell className="!text-right">
                       {pokemon.height}
                     </TableCell>

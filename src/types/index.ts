@@ -14,7 +14,15 @@ export interface PokemonsData {
     };
   };
 }
-
+export interface PokemonDescription {
+  flavor_text?: string;
+  description?: string;
+}
+export interface SinglePokemonData {
+  pokemon_v2_pokemon: Pokemon[];
+  pokemon_v2_pokemonspeciesflavortext: PokemonDescription[];
+  pokemon_v2_pokemonspeciesdescription: PokemonDescription[];
+}
 export interface Column {
   id: string;
   label: string;
@@ -27,6 +35,7 @@ export interface TableData {
   page: number;
   rowsPerPage: number;
   id?: string;
+  navigateUrl: string;
   handleChangeRowsPerPage: (event: React.ChangeEvent<HTMLInputElement>) => void;
   handleChangePage: (event: unknown, newPage: number) => void;
 }

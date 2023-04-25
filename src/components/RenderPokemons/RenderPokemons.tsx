@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 import { useNavigate, useLocation } from "react-router-dom";
 import MUITable from "../Table";
 import { PokemonsData, Column } from "../../types";
+import Loading from "../Loading";
 
 const columns: readonly Column[] = [
   { id: "id", label: "Id" },
@@ -28,7 +29,7 @@ const RenderPokemons: React.FC = () => {
     limit: rowsPerPage,
   };
 
-  const { data, refetch } = useGQLQuery<PokemonsData>(
+  const { data, refetch, isFetching } = useGQLQuery<PokemonsData>(
     ["pokemons"],
     GET_POKEMONS,
     gqlVariables
@@ -54,6 +55,10 @@ const RenderPokemons: React.FC = () => {
   useEffect(() => {
     refetch();
   }, [page, rowsPerPage]);
+
+  if (isFetching) {
+    return <Loading />;
+  }
   return (
     <MUITable
       columns={columns}
@@ -63,6 +68,7 @@ const RenderPokemons: React.FC = () => {
       rowsPerPage={rowsPerPage}
       handleChangeRowsPerPage={handleChangeRowsPerPage}
       handleChangePage={handleChangePage}
+      navigateUrl={"/pokemon"}
     />
   );
 };
