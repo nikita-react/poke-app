@@ -38,4 +38,5 @@ export interface TableData {
   navigateUrl: string;
   handleChangeRowsPerPage: (event: React.ChangeEvent<HTMLInputElement>) => void;
   handleChangePage: (event: unknown, newPage: number) => void;
+  isFetching: boolean;
 }

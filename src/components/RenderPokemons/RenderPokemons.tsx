@@ -6,9 +6,9 @@ import { useParams } from "react-router-dom";
 import { useNavigate, useLocation } from "react-router-dom";
 import MUITable from "../Table";
 import { PokemonsData, Column } from "../../types";
-import Loading from "../Loading";
 
 const columns: readonly Column[] = [
+  { id: "checkbox", label: "" },
   { id: "id", label: "Id" },
   { id: "name", label: "Name" },
   { id: "height", label: "Height", align: "right" },
@@ -56,9 +56,6 @@ const RenderPokemons: React.FC = () => {
     refetch();
   }, [page, rowsPerPage]);
 
-  if (isFetching) {
-    return <Loading />;
-  }
   return (
     <MUITable
       columns={columns}
@@ -69,6 +66,7 @@ const RenderPokemons: React.FC = () => {
       handleChangeRowsPerPage={handleChangeRowsPerPage}
       handleChangePage={handleChangePage}
       navigateUrl={"/pokemon"}
+      isFetching={isFetching}
     />
   );
 };
