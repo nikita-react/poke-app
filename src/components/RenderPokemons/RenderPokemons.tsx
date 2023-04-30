@@ -14,7 +14,7 @@ const RenderPokemons: React.FC = () => {
   const location = useLocation();
   const [page, setPage] = useState(Number(id) > 1 ? Number(id) : 0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [selectedItems, setSelectedItems] = useState<{ id: number }[]>([]);
+  const [selectedItems, setSelectedItems] = useState<number[]>([]);
 
   const gqlVariables = {
     offset: Number((page + 1) * rowsPerPage - rowsPerPage),
@@ -55,19 +55,19 @@ const RenderPokemons: React.FC = () => {
   ) => {
     if (event.target.checked) {
       setSelectedItems((prev) => {
-        const updatedSelectedItems = [...prev, { id: id }];
+        const updatedSelectedItems = [...prev, id];
         handleLocalStorage("pokeApiSelectedItems", updatedSelectedItems);
         return updatedSelectedItems;
       });
     } else {
       setSelectedItems((prev) => {
-        const updatedSelectedItems = prev.filter((item) => item.id !== id);
+        const updatedSelectedItems = prev.filter((item) => item !== id);
         handleLocalStorage("pokeApiSelectedItems", updatedSelectedItems);
         return updatedSelectedItems;
       });
     }
   };
-  const handleLocalStorage = (name: string, data: { id: number }[]) => {
+  const handleLocalStorage = (name: string, data: number[]) => {
     localStorage.setItem(name, JSON.stringify(data));
   };
   const columns: readonly Column[] = [
@@ -86,12 +86,12 @@ const RenderPokemons: React.FC = () => {
       page={page}
       id={id}
       rowsPerPage={rowsPerPage}
-      handleChangeRowsPerPage={handleChangeRowsPerPage}
-      handleChangePage={handleChangePage}
       isFetching={isFetching}
       showPagination={true}
-      handleChangeSelectedItems={handleChangeSelectedItems}
       renderCheckbox={true}
+      handleChangeRowsPerPage={handleChangeRowsPerPage}
+      handleChangePage={handleChangePage}
+      handleChangeSelectedItems={handleChangeSelectedItems}
     />
   );
 };

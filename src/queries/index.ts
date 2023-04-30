@@ -1,23 +1,5 @@
 import gql from "graphql-tag";
 
-// export const GET_POKEMONS = gql`
-//   query pokemons($limit: Int, $offset: Int) {
-//     pokemons(limit: $limit, offset: $offset) {
-//       count
-//       next
-//       previous
-//       status
-//       message
-//       results {
-//         url
-//         name
-//         image
-//         id
-//       }
-//     }
-//   }
-// `;
-
 export const GET_POKEMONS = gql`
   query pokemons($limit: Int, $offset: Int) {
     pokemon_v2_pokemon(limit: $limit, offset: $offset) {
@@ -49,6 +31,18 @@ export const GET_POKEMON = gql`
     }
     pokemon_v2_pokemonspeciesflavortext(where: { id: { _eq: $id } }) {
       flavor_text
+    }
+  }
+`;
+
+export const GET_SELECTED_POKEMONS = gql`
+  query selectedPokemons($_in: [Int!]) {
+    pokemon_v2_pokemon(where: { id: { _in: $_in } }) {
+      id
+      name
+      height
+      base_experience
+      is_default
     }
   }
 `;

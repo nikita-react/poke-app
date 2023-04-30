@@ -31,7 +31,7 @@ export interface Column {
 
 export interface TableData {
   columns: readonly Column[];
-  data: PokemonsData | undefined;
+  data: PokemonsData | any;
   page?: number;
   rowsPerPage?: number;
   id?: string;
@@ -39,7 +39,7 @@ export interface TableData {
     event: React.ChangeEvent<HTMLInputElement>
   ) => void;
   handleChangePage?: (event: any, newPage: number) => void;
-  isFetching: boolean;
+  isFetching?: boolean;
   showPagination: boolean;
   handleChangeSelectedItems?: (event: any, id: number) => void;
   renderCheckbox: boolean;
