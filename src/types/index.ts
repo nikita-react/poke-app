@@ -30,13 +30,17 @@ export interface Column {
 }
 
 export interface TableData {
-  columns: ReadonlyArray<Column>;
+  columns: readonly Column[];
   data: PokemonsData | undefined;
-  page: number;
-  rowsPerPage: number;
+  page?: number;
+  rowsPerPage?: number;
   id?: string;
-  navigateUrl: string;
-  handleChangeRowsPerPage: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  handleChangePage: (event: unknown, newPage: number) => void;
+  handleChangeRowsPerPage?: (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => void;
+  handleChangePage?: (event: any, newPage: number) => void;
   isFetching: boolean;
+  showPagination: boolean;
+  handleChangeSelectedItems?: (event: any, id: number) => void;
+  renderCheckbox: boolean;
 }

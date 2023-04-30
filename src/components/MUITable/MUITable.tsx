@@ -25,42 +25,25 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
+
 const MUITable: FC<TableData> = ({
   columns,
   data,
   page,
   rowsPerPage,
   id,
-  navigateUrl,
   handleChangeRowsPerPage,
   handleChangePage,
   isFetching,
+  showPagination,
+  handleChangeSelectedItems,
+  renderCheckbox,
 }) => {
   const navigate = useNavigate();
   const classes = useStyles();
+  const currentPage = page ?? 0;
+  const currentRowsPerPage = rowsPerPage ?? 10;
 
-  const [selectedItems, setSelectedItems] = useState<{ id: number }[]>([]);
-  const handleChangeSelectedItems = (
-    event: React.ChangeEvent<HTMLInputElement>,
-    id: number
-  ) => {
-    if (event.target.checked) {
-      setSelectedItems((prev) => {
-        const updatedSelectedItems = [...prev, { id: id }];
-        handleLocalStorage("pokeApiSelectedItems", updatedSelectedItems);
-        return updatedSelectedItems;
-      });
-    } else {
-      setSelectedItems((prev) => {
-        const updatedSelectedItems = prev.filter((item) => item.id !== id);
-        handleLocalStorage("pokeApiSelectedItems", updatedSelectedItems);
-        return updatedSelectedItems;
-      });
-    }
-  };
-  const handleLocalStorage = (name: string, data: { id: number }[]) => {
-    localStorage.setItem(name, JSON.stringify(data));
-  };
   return (
     <Paper
       className="container mx-auto"
@@ -82,13 +65,16 @@ const MUITable: FC<TableData> = ({
               const isDefault = pokemon.is_default ? "Yes" : "No";
               return (
                 <TableRow hover role="checkbox" tabIndex={-1} key={pokemon.id}>
-                  <TableCell>
-                    <Checkbox
-                      onChange={(event) =>
-                        handleChangeSelectedItems(event, pokemon.id)
-                      }
-                    />
-                  </TableCell>
+                  {renderCheckbox && (
+                    <TableCell>
+                      <Checkbox
+                        onChange={(event) =>
+                          handleChangeSelectedItems &&
+                          handleChangeSelectedItems(event, pokemon.id)
+                        }
+                      />
+                    </TableCell>
+                  )}
                   <TableCell>
                     {isFetching ? (
                       <Skeleton variant="text" sx={{ fontSize: "1rem" }} />
@@ -99,7 +85,7 @@ const MUITable: FC<TableData> = ({
                   <TableCell>
                     <span
                       className="cursor-pointer hover:underline "
-                      onClick={() => navigate(`${navigateUrl}/${pokemon.id}`)}
+                      onClick={() => navigate(`/pokemon/${pokemon.id}`)}
                     >
                       {isFetching ? (
                         <Skeleton variant="text" sx={{ fontSize: "1rem" }} />
@@ -152,21 +138,25 @@ const MUITable: FC<TableData> = ({
           </TableBody>
         </Table>
       </TableContainer>
-      <TablePagination
-        rowsPerPageOptions={[10, 25, 100]}
-        component="div"
-        count={
-          data
-            ? data.pokemon_v2_pokemon_aggregate.aggregate.count
-            : id
-            ? rowsPerPage * (page + 1)
-            : rowsPerPage
-        }
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-      />
+      {showPagination && (
+        <TablePagination
+          rowsPerPageOptions={[10, 25, 100]}
+          component="div"
+          count={
+            data
+              ? data.pokemon_v2_pokemon_aggregate.aggregate.count
+              : id
+              ? currentRowsPerPage * (currentPage + 1)
+              : currentRowsPerPage
+          }
+          rowsPerPage={currentRowsPerPage}
+          page={currentPage}
+          onPageChange={(event, newPage) =>
+            handleChangePage && handleChangePage(event, newPage)
+          }
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
+      )}
     </Paper>
   );
 };
