@@ -14,7 +14,9 @@ const RenderPokemons: React.FC = () => {
   const location = useLocation();
   const [page, setPage] = useState(Number(id) > 1 ? Number(id) : 0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [selectedItems, setSelectedItems] = useState<number[]>([]);
+  const [selectedItems, setSelectedItems] = useState<number[]>(
+    JSON.parse(localStorage.getItem("pokeApiSelectedItems") || "[]")
+  );
 
   const gqlVariables = {
     offset: Number((page + 1) * rowsPerPage - rowsPerPage),
@@ -92,6 +94,7 @@ const RenderPokemons: React.FC = () => {
       handleChangeRowsPerPage={handleChangeRowsPerPage}
       handleChangePage={handleChangePage}
       handleChangeSelectedItems={handleChangeSelectedItems}
+      selectedItems={selectedItems}
     />
   );
 };

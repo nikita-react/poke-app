@@ -6,10 +6,9 @@ import {
   Drawer,
   List,
   ListItem,
-  ListItemText,
-} from "@material-ui/core";
+} from "@mui/material";
 import { Link } from "react-router-dom";
-import MenuIcon from "@material-ui/icons/Menu";
+import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";

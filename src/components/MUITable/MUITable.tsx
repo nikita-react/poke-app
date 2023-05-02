@@ -1,5 +1,4 @@
-import { FC, useState } from "react";
-import "./styles.scss";
+import { FC } from "react";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -11,15 +10,15 @@ import TableRow from "@mui/material/TableRow";
 import { TableData, Pokemon } from "../../types";
 import { useNavigate } from "react-router-dom";
 import { Skeleton } from "@mui/material";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@mui/styles";
 import Checkbox from "@mui/material/Checkbox";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   skeleton: {
     margin: "0 auto",
     width: 96,
     height: 96,
-    [theme.breakpoints.down("sm")]: {
+    "@media (max-width: 780px)": {
       width: 40,
       height: 40,
     },
@@ -38,12 +37,13 @@ const MUITable: FC<TableData> = ({
   showPagination,
   handleChangeSelectedItems,
   renderCheckbox,
+  selectedItems,
 }) => {
   const navigate = useNavigate();
   const classes = useStyles();
   const currentPage = page ?? 0;
   const currentRowsPerPage = rowsPerPage ?? 10;
-
+  const currentSelectedItems = selectedItems ?? [];
   return (
     <Paper
       className="container mx-auto"
@@ -63,11 +63,16 @@ const MUITable: FC<TableData> = ({
           <TableBody>
             {data?.pokemon_v2_pokemon.map((pokemon: Pokemon) => {
               const isDefault = pokemon.is_default ? "Yes" : "No";
+              const checkboxState = currentSelectedItems.some(
+                (i) => i === pokemon.id
+              );
+
               return (
                 <TableRow hover role="checkbox" tabIndex={-1} key={pokemon.id}>
                   {renderCheckbox && (
                     <TableCell>
                       <Checkbox
+                        checked={checkboxState}
                         onChange={(event) =>
                           handleChangeSelectedItems &&
                           handleChangeSelectedItems(event, pokemon.id)

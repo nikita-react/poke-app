@@ -14,6 +14,9 @@ export interface PokemonsData {
     };
   };
 }
+export interface ComparisonPagePokemonData {
+  pokemon_v2_pokemon: Pokemon[];
+}
 export interface PokemonDescription {
   flavor_text?: string;
   description?: string;
@@ -43,4 +46,19 @@ export interface TableData {
   showPagination: boolean;
   handleChangeSelectedItems?: (event: any, id: number) => void;
   renderCheckbox: boolean;
+  selectedItems?: number[];
+}
+export type SortKey =
+  | "Height: High-Low"
+  | "Height: Low-High"
+  | "Experience: High-Low"
+  | "Experience: Low-High"
+  | "Default";
+
+export interface SimpleDialogProps {
+  open: boolean;
+  selectedValue: string;
+  onClose: (value: SortKey) => void;
+  setSortKey: (value: SortKey) => void;
+  data: { key: string; name: string }[];
 }

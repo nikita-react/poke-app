@@ -1,5 +1,14 @@
+import { useState, useEffect } from "react";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import MUIDialog from "../MUIDialog";
 import MUITable from "../MUITable";
-import { Column } from "../../types";
+import {
+  Column,
+  ComparisonPagePokemonData,
+  Pokemon,
+  SortKey,
+} from "../../types";
 import { useGQLQuery } from "../../hooks/useGQLQuery";
 import { GET_SELECTED_POKEMONS } from "../../queries";
 
@@ -12,10 +21,24 @@ const RenderSelectedPokemons = () => {
     { id: "default", label: "Default", align: "right" },
     { id: "image", label: "Image", align: "center" },
   ];
-  const selectedItemsId = localStorage.getItem("pokeApiSelectedItems") || "";
-  const selectedItemsIdArray = JSON.parse(selectedItemsId);
+  const keysToCompare = [
+    { key: "Default", name: "Default" },
+    { key: "Height: High-Low", name: "Height: High-Low" },
+    { key: "Height: Low-High", name: "Height: Low-High" },
+    { key: "Experience: High-Low", name: "Experience: High-Low" },
+    { key: "Experience: Low-High", name: "Experience: Low-High" },
+  ];
 
-  const { data, isLoading, isFetching } = useGQLQuery(
+  const [open, setOpen] = useState(false);
+  const [selectedValue, setSelectedValue] = useState<SortKey>("Default");
+  const [sortedData, setSortedData] = useState<
+    ComparisonPagePokemonData | undefined
+  >();
+  const selectedItemsIdArray = JSON.parse(
+    localStorage.getItem("pokeApiSelectedItems") || "[]"
+  );
+
+  const { data, isFetching } = useGQLQuery<ComparisonPagePokemonData>(
     ["selectedPokemons"],
     GET_SELECTED_POKEMONS,
     {
@@ -23,14 +46,72 @@ const RenderSelectedPokemons = () => {
     }
   );
 
+  const sortPokemonData = (data: Pokemon[], selectedValue: SortKey) => {
+    switch (selectedValue) {
+      case "Height: High-Low":
+        return data.sort((a, b) => b.height - a.height);
+      case "Height: Low-High":
+        return data.sort((a, b) => a.height - b.height);
+      case "Experience: High-Low":
+        return data.sort((a, b) => b.base_experience - a.base_experience);
+      case "Experience: Low-High":
+        return data.sort((a, b) => a.base_experience - b.base_experience);
+      case "Default":
+      default:
+        return data.sort((a, b) => a.id - b.id);
+    }
+  };
+  useEffect(() => {
+    if (data) {
+      const sortedPokemonData = sortPokemonData(
+        [...data.pokemon_v2_pokemon],
+        selectedValue
+      );
+      setSortedData({ pokemon_v2_pokemon: sortedPokemonData });
+    }
+  }, [data, selectedValue]);
+
+  const handleSortClick = () => {
+    setOpen(true);
+  };
+
+  const handleSortClose = (value: SortKey) => {
+    setOpen(false);
+    setSelectedValue(value);
+  };
+
   return (
-    <MUITable
-      columns={columns}
-      data={data}
-      isFetching={isFetching}
-      showPagination={false}
-      renderCheckbox={false}
-    />
+    <>
+      {selectedItemsIdArray.length ? (
+        <div className="container flex flex-col items-start gap-4 mx-auto">
+          <Typography variant="subtitle1" component="div">
+            {selectedValue && ` Sort by ${selectedValue}`}
+          </Typography>
+          <Button variant="contained" color="success" onClick={handleSortClick}>
+            Sort by
+          </Button>
+
+          <MUIDialog
+            selectedValue={selectedValue}
+            open={open}
+            onClose={handleSortClose}
+            setSortKey={setSelectedValue}
+            data={keysToCompare}
+          />
+          <MUITable
+            columns={columns}
+            data={sortedData}
+            isFetching={isFetching}
+            showPagination={false}
+            renderCheckbox={false}
+          />
+        </div>
+      ) : (
+        <div className="container mx-auto">
+          You haven't selected any Pokémon
+        </div>
+      )}
+    </>
   );
 };
 export default RenderSelectedPokemons;
