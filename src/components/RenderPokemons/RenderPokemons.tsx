@@ -72,6 +72,7 @@ const RenderPokemons: React.FC = () => {
   const handleLocalStorage = (name: string, data: number[]) => {
     localStorage.setItem(name, JSON.stringify(data));
   };
+
   const columns: readonly Column[] = [
     { id: "checkbox", label: "" },
     { id: "id", label: "Id" },
@@ -81,6 +82,7 @@ const RenderPokemons: React.FC = () => {
     { id: "default", label: "Default", align: "right" },
     { id: "image", label: "Image", align: "center" },
   ];
+
   return (
     <MUITable
       columns={columns}
@@ -95,6 +97,7 @@ const RenderPokemons: React.FC = () => {
       handleChangePage={handleChangePage}
       handleChangeSelectedItems={handleChangeSelectedItems}
       selectedItems={selectedItems}
+      renderDeleteButton={false}
     />
   );
 };

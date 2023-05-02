@@ -46,7 +46,9 @@ export interface TableData {
   showPagination: boolean;
   handleChangeSelectedItems?: (event: any, id: number) => void;
   renderCheckbox: boolean;
+  renderDeleteButton: boolean;
   selectedItems?: number[];
+  deleteSelectedPokemon?: (id: number) => void;
 }
 export type SortKey =
   | "Height: High-Low"

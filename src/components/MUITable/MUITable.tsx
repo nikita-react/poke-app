@@ -1,6 +1,7 @@
 import { FC } from "react";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
+import Button from "@mui/material/Button";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
@@ -12,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 import { Skeleton } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import Checkbox from "@mui/material/Checkbox";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const useStyles = makeStyles(() => ({
   skeleton: {
@@ -38,12 +40,15 @@ const MUITable: FC<TableData> = ({
   handleChangeSelectedItems,
   renderCheckbox,
   selectedItems,
+  renderDeleteButton,
+  deleteSelectedPokemon,
 }) => {
   const navigate = useNavigate();
   const classes = useStyles();
   const currentPage = page ?? 0;
   const currentRowsPerPage = rowsPerPage ?? 10;
   const currentSelectedItems = selectedItems ?? [];
+
   return (
     <Paper
       className="container mx-auto"
@@ -137,6 +142,21 @@ const MUITable: FC<TableData> = ({
                       />
                     )}
                   </TableCell>
+                  {renderDeleteButton && (
+                    <TableCell>
+                      <Button
+                        color="error"
+                        variant="outlined"
+                        startIcon={<DeleteIcon />}
+                        onClick={() =>
+                          deleteSelectedPokemon &&
+                          deleteSelectedPokemon(pokemon.id)
+                        }
+                      >
+                        Delete
+                      </Button>
+                    </TableCell>
+                  )}
                 </TableRow>
               );
             })}

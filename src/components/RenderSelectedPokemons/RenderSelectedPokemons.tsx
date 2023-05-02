@@ -20,7 +20,9 @@ const RenderSelectedPokemons = () => {
     { id: "experience", label: "Experience", align: "right" },
     { id: "default", label: "Default", align: "right" },
     { id: "image", label: "Image", align: "center" },
+    { id: "delete", label: "" },
   ];
+
   const keysToCompare = [
     { key: "Default", name: "Default" },
     { key: "Height: High-Low", name: "Height: High-Low" },
@@ -34,11 +36,10 @@ const RenderSelectedPokemons = () => {
   const [sortedData, setSortedData] = useState<
     ComparisonPagePokemonData | undefined
   >();
-  const selectedItemsIdArray = JSON.parse(
-    localStorage.getItem("pokeApiSelectedItems") || "[]"
+  const [selectedItemsIdArray, setSelectedItemsIdArray] = useState(
+    JSON.parse(localStorage.getItem("pokeApiSelectedItems") || "[]")
   );
-
-  const { data, isFetching } = useGQLQuery<ComparisonPagePokemonData>(
+  const { data, isFetching, refetch } = useGQLQuery<ComparisonPagePokemonData>(
     ["selectedPokemons"],
     GET_SELECTED_POKEMONS,
     {
@@ -61,6 +62,7 @@ const RenderSelectedPokemons = () => {
         return data.sort((a, b) => a.id - b.id);
     }
   };
+
   useEffect(() => {
     if (data) {
       const sortedPokemonData = sortPokemonData(
@@ -69,7 +71,8 @@ const RenderSelectedPokemons = () => {
       );
       setSortedData({ pokemon_v2_pokemon: sortedPokemonData });
     }
-  }, [data, selectedValue]);
+    refetch();
+  }, [data, selectedValue, selectedItemsIdArray]);
 
   const handleSortClick = () => {
     setOpen(true);
@@ -78,6 +81,21 @@ const RenderSelectedPokemons = () => {
   const handleSortClose = (value: SortKey) => {
     setOpen(false);
     setSelectedValue(value);
+  };
+
+  const deleteSelectedPokemon = (id: number) => {
+    const data = JSON.parse(
+      localStorage.getItem("pokeApiSelectedItems") || "[]"
+    );
+
+    const updatedSelectedItems = data.filter((item: number) => item !== id);
+
+    localStorage.setItem(
+      "pokeApiSelectedItems",
+      JSON.stringify(updatedSelectedItems)
+    );
+
+    setSelectedItemsIdArray(updatedSelectedItems);
   };
 
   return (
@@ -104,6 +122,8 @@ const RenderSelectedPokemons = () => {
             isFetching={isFetching}
             showPagination={false}
             renderCheckbox={false}
+            renderDeleteButton={true}
+            deleteSelectedPokemon={deleteSelectedPokemon}
           />
         </div>
       ) : (
