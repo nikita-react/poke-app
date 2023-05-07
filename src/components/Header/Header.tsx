@@ -71,7 +71,7 @@ const Navbar =  ({ search }: { search: boolean }) => {
   
     
   const links = [
-    { label: "Pokemons", href: "/pokemons" },
+    { label: "Pokemons", href: "/pokemons/page/1" },
     { label: "Compare", href: "/comparison" },
   ];
 
