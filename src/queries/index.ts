@@ -1,8 +1,8 @@
 import gql from "graphql-tag";
 
 export const GET_POKEMONS = gql`
-  query pokemons($limit: Int, $offset: Int) {
-    pokemon_v2_pokemon(limit: $limit, offset: $offset) {
+ query pokemonsSearch($limit: Int, $offset: Int, $query: String) {
+    pokemon_v2_pokemon(limit: $limit, offset: $offset, where: { name: {_regex: $query } }) {
       id
       name
       height
@@ -16,6 +16,7 @@ export const GET_POKEMONS = gql`
     }
   }
 `;
+
 
 export const GET_POKEMON = gql`
   query pokemon($id: Int!) {

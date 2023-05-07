@@ -7,6 +7,8 @@ import { useNavigate, useLocation } from "react-router-dom";
 import MUITable from "../MUITable";
 import { PokemonsData } from "../../types";
 import { Column } from "../../types";
+import { useQuery } from "@tanstack/react-query";
+
 
 const RenderPokemons: React.FC = () => {
   const { id } = useParams();
@@ -18,9 +20,15 @@ const RenderPokemons: React.FC = () => {
     JSON.parse(localStorage.getItem("pokeApiSelectedItems") || "[]")
   );
 
+  const { data: searchData } = useQuery(['searchData'], () => {
+    return ''
+  });
+
+
   const gqlVariables = {
     offset: Number((page + 1) * rowsPerPage - rowsPerPage),
     limit: rowsPerPage,
+    query: searchData ?? ''
   };
 
   const { data, refetch, isFetching } = useGQLQuery<PokemonsData>(
@@ -31,8 +39,6 @@ const RenderPokemons: React.FC = () => {
 
   const handleChangePage = (event: any, newPage: number) => {
     setPage(newPage);
-    console.log(newPage);
-
     const segments = location.pathname.split("/");
     const baseSegments = segments.slice(0, segments.indexOf("pokemons") + 1);
     const base = baseSegments.join("/");
@@ -49,7 +55,7 @@ const RenderPokemons: React.FC = () => {
 
   useEffect(() => {
     refetch();
-  }, [page, rowsPerPage]);
+  }, [page, rowsPerPage, searchData]);
 
   const handleChangeSelectedItems = (
     event: React.ChangeEvent<HTMLInputElement>,

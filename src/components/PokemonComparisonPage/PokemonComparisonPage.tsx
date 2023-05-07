@@ -6,7 +6,7 @@ import RenderSelectedPokemons from "../RenderSelectedPokemons";
 const PokemonComparisonPage = () => {
   return (
     <Layout styles="flex justify-between flex-col gap-5	">
-      <Header />
+      <Header  search={false}/>
       <RenderSelectedPokemons />
       <Footer />
     </Layout>

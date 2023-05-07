@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   AppBar,
   Toolbar,
@@ -12,6 +12,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
+import { useQueryClient } from "@tanstack/react-query";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -54,13 +55,21 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-const Navbar = () => {
+const Navbar =  ({ search }: { search: boolean }) => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const queryClient = useQueryClient();
+
+ 
 
   const toggleDrawer = (isOpen: boolean) => () => {
     setIsDrawerOpen(isOpen);
   };
 
+  const handleSearch = (value: string) => {
+    queryClient.setQueryData(['searchData'], value);
+  }   
+  
+    
   const links = [
     { label: "Pokemons", href: "/pokemons" },
     { label: "Compare", href: "/comparison" },
@@ -97,20 +106,25 @@ const Navbar = () => {
     </List>
   );
 
+  
+  
   return (
     <>
       <AppBar position="static">
         <Toolbar className="justify-between ">
           {navbarLinks}
-          <Search>
+          {search && 
+          <Search >
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
             <StyledInputBase
+              onChange={(e) => handleSearch(e.target.value)}
               placeholder="Search…"
               inputProps={{ "aria-label": "search" }}
             />
           </Search>
+          }
         </Toolbar>
       </AppBar>
       <Drawer anchor="left" open={isDrawerOpen} onClose={toggleDrawer(false)}>

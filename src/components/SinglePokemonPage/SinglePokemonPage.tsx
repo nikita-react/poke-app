@@ -6,7 +6,7 @@ import RenderSinglePokemon from "../RenderSinglePokemon";
 const SinglePokemonPage = () => {
   return (
     <Layout styles="flex justify-between flex-col gap-5	">
-      <Header />
+      <Header search={false}/>
       <RenderSinglePokemon />
       <Footer />
     </Layout>

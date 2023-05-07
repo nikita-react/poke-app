@@ -7,7 +7,7 @@ import RenderPokemons from "../RenderPokemons";
 const PokemonsPage: FC = () => {
   return (
     <Layout styles="flex justify-between flex-col gap-5	">
-      <Header />
+      <Header search={true} />
       <RenderPokemons />
       <Footer />
     </Layout>
