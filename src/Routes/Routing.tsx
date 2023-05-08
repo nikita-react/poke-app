@@ -14,8 +14,8 @@ const Routing: React.FC = () => {
   return (
     <>
       <Routes>
-        <Route element={<PublicRoutes />}>
-          <Route path="/" element={<IndexPage />} />
+        <Route path="/" element={<PublicRoutes />}>
+          <Route index element={<IndexPage />} />
           <Route path="/registration" element={<SignUp />} />
           <Route path="/login" element={<SingIn />} />
         </Route>
