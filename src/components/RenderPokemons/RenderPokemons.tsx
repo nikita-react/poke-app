@@ -14,7 +14,7 @@ const RenderPokemons: React.FC = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(Number(id) > 1 ? Number(id) - 1 : 0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [selectedItems, setSelectedItems] = useState<number[]>(
     JSON.parse(localStorage.getItem("pokeApiSelectedItems") || "[]")
@@ -55,8 +55,7 @@ const RenderPokemons: React.FC = () => {
 
   useEffect(() => {
     refetch();
-    setPage(Number(id) > 1 ? Number(id) -1 : 0)
-    
+    setPage(Number(id) > 1 ? Number(id) - 1 : 0)
   }, [page, rowsPerPage, searchData, id]);
 
   const handleChangeSelectedItems = (
