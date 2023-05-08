@@ -22,7 +22,7 @@ type RegistrationValues = {
   confirmPassword: string;
 };
 
-const RegistrationForm = () => {
+const SignUp = () => {
   const navigate = useNavigate();
   const { control, register, handleSubmit } = useForm<RegistrationValues>();
   const classes = useStyles();
@@ -83,7 +83,7 @@ const RegistrationForm = () => {
     <Layout styles={styles.formWrapper}>
       <ToastContainer />
       <div className={styles.formInnerWrapper}>
-        <h1 className={styles.h1}>Registration</h1>
+        <h1 className={styles.h1}>Sign up</h1>
         <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
           <Controller
             control={control}
@@ -153,7 +153,7 @@ const RegistrationForm = () => {
           <p className="mb-2 ">do you already have an account?</p>
           <Link to="/login">
             <Button size="small" variant="contained" color="success">
-              Go to login page
+              Go to "sign in" page
             </Button>
           </Link>
         </div>
@@ -162,4 +162,4 @@ const RegistrationForm = () => {
   );
 };
 
-export default RegistrationForm;
+export default SignUp;
