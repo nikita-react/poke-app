@@ -1,17 +1,16 @@
-import { FC } from "react";
 import Layout from "../Layout";
 import Footer from "../Footer";
 import Header from "../Header";
-import RenderPokemons from "../RenderPokemons";
+import RenderSinglePokemon from "../RenderSinglePokemon";
 
-const PokemonsPage: FC = () => {
+const SinglePokemonPage = () => {
   return (
     <Layout styles="flex justify-between flex-col gap-5	">
-      <Header search={true} />
-      <RenderPokemons />
+      <Header search={false}/>
+      <RenderSinglePokemon />
       <Footer />
     </Layout>
   );
 };
 
-export default PokemonsPage;
+export default SinglePokemonPage;

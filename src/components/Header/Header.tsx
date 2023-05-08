@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   AppBar,
   Toolbar,
@@ -6,12 +6,13 @@ import {
   Drawer,
   List,
   ListItem,
-  ListItemText,
-} from "@material-ui/core";
-import MenuIcon from "@material-ui/icons/Menu";
+} from "@mui/material";
+import { Link } from "react-router-dom";
+import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
+import { useQueryClient } from "@tanstack/react-query";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -54,31 +55,33 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-const Navbar = () => {
+const Navbar =  ({ search }: { search: boolean }) => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const queryClient = useQueryClient();
+
+ 
 
   const toggleDrawer = (isOpen: boolean) => () => {
     setIsDrawerOpen(isOpen);
   };
 
+  const handleSearch = (value: string) => {
+    queryClient.setQueryData(['searchData'], value);
+  }   
+  
+    
   const links = [
-    { label: "Pokemons", href: "/pokemons" },
-    { label: "Compare", href: "/compare" },
-    { label: "History", href: "#" },
-    { label: "Places", href: "#" },
+    { label: "Pokemons", href: "/pokemons/page/1" },
+    { label: "Compare", href: "/comparison" },
   ];
 
   const navbarLinks = (
     <>
       <div className="flex justify-start gap-2 md:hidden">
         {links.map((link) => (
-          <a
-            href={link.href}
-            key={link.label}
-            style={{ textDecoration: "none", color: "white" }}
-          >
+          <Link to={link.href} key={link.label}>
             {link.label}
-          </a>
+          </Link>
         ))}
       </div>
       <IconButton
@@ -96,27 +99,32 @@ const Navbar = () => {
   const drawerLinks = (
     <List className="w-72 sm:w-52">
       {links.map((link) => (
-        <ListItem button key={link.label}>
-          <ListItemText primary={link.label} />
-        </ListItem>
+        <Link to={link.href} key={link.label}>
+          <ListItem button>{link.label}</ListItem>
+        </Link>
       ))}
     </List>
   );
 
+  
+  
   return (
     <>
       <AppBar position="static">
         <Toolbar className="justify-between ">
           {navbarLinks}
-          <Search>
+          {search && 
+          <Search >
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
             <StyledInputBase
+              onChange={(e) => handleSearch(e.target.value)}
               placeholder="Search…"
               inputProps={{ "aria-label": "search" }}
             />
           </Search>
+          }
         </Toolbar>
       </AppBar>
       <Drawer anchor="left" open={isDrawerOpen} onClose={toggleDrawer(false)}>

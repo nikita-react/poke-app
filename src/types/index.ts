@@ -14,6 +14,9 @@ export interface PokemonsData {
     };
   };
 }
+export interface ComparisonPagePokemonData {
+  pokemon_v2_pokemon: Pokemon[];
+}
 export interface PokemonDescription {
   flavor_text?: string;
   description?: string;
@@ -30,12 +33,34 @@ export interface Column {
 }
 
 export interface TableData {
-  columns: ReadonlyArray<Column>;
-  data: PokemonsData | undefined;
-  page: number;
-  rowsPerPage: number;
+  columns: readonly Column[];
+  data: PokemonsData | any;
+  page?: number;
+  rowsPerPage?: number;
   id?: string;
-  navigateUrl: string;
-  handleChangeRowsPerPage: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  handleChangePage: (event: unknown, newPage: number) => void;
+  handleChangeRowsPerPage?: (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => void;
+  handleChangePage?: (event: any, newPage: number) => void;
+  isFetching?: boolean;
+  showPagination: boolean;
+  handleChangeSelectedItems?: (event: any, id: number) => void;
+  renderCheckbox: boolean;
+  renderDeleteButton: boolean;
+  selectedItems?: number[];
+  deleteSelectedPokemon?: (id: number) => void;
+}
+export type SortKey =
+  | "Height: High-Low"
+  | "Height: Low-High"
+  | "Experience: High-Low"
+  | "Experience: Low-High"
+  | "Default";
+
+export interface SimpleDialogProps {
+  open: boolean;
+  selectedValue: string;
+  onClose: (value: SortKey) => void;
+  setSortKey: (value: SortKey) => void;
+  data: { key: string; name: string }[];
 }

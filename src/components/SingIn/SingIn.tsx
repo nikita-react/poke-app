@@ -21,7 +21,7 @@ type LoginValues = {
   password: string;
 };
 
-const LoginForm = () => {
+const SingIn = () => {
   const { control, register, handleSubmit } = useForm<LoginValues>();
   const classes = useStyles();
   const { errors } = useFormState({
@@ -69,7 +69,7 @@ const LoginForm = () => {
     <Layout styles={styles.formWrapper}>
       <ToastContainer />
       <div className={styles.formInnerWrapper}>
-        <h1 className={styles.h1}>Login</h1>
+        <h1 className={styles.h1}>Sing in</h1>
         <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
           <Controller
             control={control}
@@ -118,7 +118,7 @@ const LoginForm = () => {
           <p className="mb-2 ">don't have an account?</p>
           <Link to="/registration">
             <Button size="small" variant="contained" color="success">
-              Go to registration page
+              Create account
             </Button>
           </Link>
         </div>
@@ -127,4 +127,4 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+export default SingIn;
