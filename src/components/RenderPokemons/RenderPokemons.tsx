@@ -6,8 +6,8 @@ import { useParams } from "react-router-dom";
 import { useNavigate, useLocation } from "react-router-dom";
 import MUITable from "../MUITable";
 import { PokemonsData } from "../../types";
-import { Column } from "../../types";
 import { useQuery } from "@tanstack/react-query";
+import { RenderPokemonsColumns } from '../../constants';
 
 
 const RenderPokemons: React.FC = () => {
@@ -80,19 +80,11 @@ const RenderPokemons: React.FC = () => {
     localStorage.setItem(name, JSON.stringify(data));
   };
 
-  const columns: readonly Column[] = [
-    { id: "checkbox", label: "" },
-    { id: "id", label: "Id" },
-    { id: "name", label: "Name" },
-    { id: "height", label: "Height", align: "right" },
-    { id: "experience", label: "Experience", align: "right" },
-    { id: "default", label: "Default", align: "right" },
-    { id: "image", label: "Image", align: "center" },
-  ];
+
 
   return (
     <MUITable
-      columns={columns}
+      columns={RenderPokemonsColumns}
       data={data}
       page={page}
       id={id}

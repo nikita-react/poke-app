@@ -55,11 +55,11 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-const Navbar =  ({ search }: { search: boolean }) => {
+const Header = ({ search }: { search: boolean }) => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const queryClient = useQueryClient();
 
- 
+
 
   const toggleDrawer = (isOpen: boolean) => () => {
     setIsDrawerOpen(isOpen);
@@ -67,9 +67,9 @@ const Navbar =  ({ search }: { search: boolean }) => {
 
   const handleSearch = (value: string) => {
     queryClient.setQueryData(['searchData'], value);
-  }   
-  
-    
+  }
+
+
   const links = [
     { label: "Pokemons", href: "/pokemons/page/1" },
     { label: "Compare", href: "/comparison" },
@@ -106,24 +106,24 @@ const Navbar =  ({ search }: { search: boolean }) => {
     </List>
   );
 
-  
-  
+
+
   return (
     <>
       <AppBar position="static">
         <Toolbar className="justify-between ">
           {navbarLinks}
-          {search && 
-          <Search >
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              onChange={(e) => handleSearch(e.target.value)}
-              placeholder="Search…"
-              inputProps={{ "aria-label": "search" }}
-            />
-          </Search>
+          {search &&
+            <Search >
+              <SearchIconWrapper>
+                <SearchIcon />
+              </SearchIconWrapper>
+              <StyledInputBase
+                onChange={(e) => handleSearch(e.target.value)}
+                placeholder="Search…"
+                inputProps={{ "aria-label": "search" }}
+              />
+            </Search>
           }
         </Toolbar>
       </AppBar>
@@ -134,4 +134,5 @@ const Navbar =  ({ search }: { search: boolean }) => {
   );
 };
 
-export default Navbar;
+export default Header;
+

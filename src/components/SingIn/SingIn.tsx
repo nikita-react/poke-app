@@ -15,6 +15,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import createAuthToast from "../Toasts/authToast";
 import Layout from "../Layout";
+import MUITextInput from "../MUITextInput";
 
 type LoginValues = {
   email: string;
@@ -71,45 +72,26 @@ const SingIn = () => {
       <div className={styles.formInnerWrapper}>
         <h1 className={styles.h1}>Sing in</h1>
         <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-          <Controller
+          <MUITextInput
             control={control}
+            register={register}
             name="email"
-            defaultValue={""}
-            render={({ field: { onChange, value } }) => (
-              <TextField
-                type="email"
-                id="email"
-                label="Email"
-                variant="outlined"
-                {...register("email", { ...validationSchema.email })}
-                value={value}
-                onChange={onChange}
-                helperText={errors.email?.message}
-                error={!!errors.email?.message}
-                className={classes.field}
-              />
-            )}
+            label="Email"
+            validationSchema={validationSchema}
+            errors={errors}
+            classes={classes}
+            defaultValue=""
           />
-          <Controller
+          <MUITextInput
             control={control}
+            register={register}
             name="password"
-            defaultValue={""}
-            render={({ field: { onChange, value } }) => (
-              <TextField
-                type="password"
-                id="password"
-                label="Password"
-                variant="outlined"
-                {...register("password", { ...validationSchema.password })}
-                value={value}
-                onChange={onChange}
-                helperText={errors.password?.message}
-                error={!!errors.password?.message}
-                className={classes.field}
-              />
-            )}
+            label="Password"
+            validationSchema={validationSchema}
+            errors={errors}
+            classes={classes}
+            defaultValue=""
           />
-
           <Button className="self-end" type="submit" variant="contained">
             Sing in
           </Button>

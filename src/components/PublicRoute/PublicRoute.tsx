@@ -1,11 +1,11 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Outlet, Navigate } from "react-router-dom";
-import { SessionContext } from "../../context";
+import { useQuery } from "@tanstack/react-query";
 
 const PublicRoutes: React.FC = () => {
-  const session = useContext(SessionContext);
+  const sessionQuery = useQuery<boolean>(['session']);
 
-  return <>{!session ? <Outlet /> : <Navigate to="/pokemons" />}</>;
+  return <>{!sessionQuery.data ? <Outlet /> : <Navigate to="/pokemons" />}</>;
 };
 
 export default PublicRoutes;

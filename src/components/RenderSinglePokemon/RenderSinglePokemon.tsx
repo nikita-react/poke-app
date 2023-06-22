@@ -6,17 +6,12 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import Loading from "../Loading";
+import usePokemonQuery from "../../hooks/usePokemonQuery";
 
 const RenderSinglePokemon = () => {
   const { id } = useParams();
+  const { data, isLoading } = usePokemonQuery(id);
 
-  const { data, isLoading } = useGQLQuery<SinglePokemonData>(
-    ["pokemon"],
-    GET_POKEMON,
-    {
-      id: id,
-    }
-  );
 
   const {
     pokemon_v2_pokemon,

@@ -1,80 +1,27 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import MUIDialog from "../MUIDialog";
 import MUITable from "../MUITable";
 import {
-  Column,
-  ComparisonPagePokemonData,
-  Pokemon,
   SortKey,
 } from "../../types";
-import { useGQLQuery } from "../../hooks/useGQLQuery";
-import { GET_SELECTED_POKEMONS } from "../../queries";
+import { keysToCompare, RenderSelectedPokemonsColumns } from "../../constants";
+import usePokemonSort from "../../hooks/usePokemonSort";
+import useSelectedPokemonsQuery from "../../hooks/useSelectedPokemonsQuery";
+import useSelectedPokemons from "../../hooks/useSelectedPokemons";
 
 const RenderSelectedPokemons = () => {
-  const columns: readonly Column[] = [
-    { id: "id", label: "Id" },
-    { id: "name", label: "Name" },
-    { id: "height", label: "Height", align: "right" },
-    { id: "experience", label: "Experience", align: "right" },
-    { id: "default", label: "Default", align: "right" },
-    { id: "image", label: "Image", align: "center" },
-    { id: "delete", label: "" },
-  ];
-
-  const keysToCompare = [
-    { key: "Default", name: "Default" },
-    { key: "Height: High-Low", name: "Height: High-Low" },
-    { key: "Height: Low-High", name: "Height: Low-High" },
-    { key: "Experience: High-Low", name: "Experience: High-Low" },
-    { key: "Experience: Low-High", name: "Experience: Low-High" },
-  ];
-
   const [open, setOpen] = useState(false);
   const [selectedValue, setSelectedValue] = useState<SortKey>("Default");
-  const [sortedData, setSortedData] = useState<
-    ComparisonPagePokemonData | undefined
-  >();
-  const [selectedItemsIdArray, setSelectedItemsIdArray] = useState(
-    JSON.parse(localStorage.getItem("pokeApiSelectedItems") || "[]")
-  );
-  const { data, isFetching, refetch } = useGQLQuery<ComparisonPagePokemonData>(
-    ["selectedPokemons"],
-    GET_SELECTED_POKEMONS,
-    {
-      _in: selectedItemsIdArray,
-    }
+  const [selectedItemsIdArray, deleteSelectedPokemon] = useSelectedPokemons();
+  const { data, isFetching } = useSelectedPokemonsQuery(selectedItemsIdArray);
+  const sortedData = usePokemonSort(
+    data,
+    selectedValue
   );
 
-  const sortPokemonData = (data: Pokemon[], selectedValue: SortKey) => {
-    switch (selectedValue) {
-      case "Height: High-Low":
-        return data.sort((a, b) => b.height - a.height);
-      case "Height: Low-High":
-        return data.sort((a, b) => a.height - b.height);
-      case "Experience: High-Low":
-        return data.sort((a, b) => b.base_experience - a.base_experience);
-      case "Experience: Low-High":
-        return data.sort((a, b) => a.base_experience - b.base_experience);
-      case "Default":
-      default:
-        return data.sort((a, b) => a.id - b.id);
-    }
-  };
-
-  useEffect(() => {
-    if (data) {
-      const sortedPokemonData = sortPokemonData(
-        [...data.pokemon_v2_pokemon],
-        selectedValue
-      );
-      setSortedData({ pokemon_v2_pokemon: sortedPokemonData });
-    }
-    refetch();
-  }, [data, selectedValue, selectedItemsIdArray]);
-
-  const handleSortClick = () => {
+  const handleSortOpen = () => {
     setOpen(true);
   };
 
@@ -83,20 +30,6 @@ const RenderSelectedPokemons = () => {
     setSelectedValue(value);
   };
 
-  const deleteSelectedPokemon = (id: number) => {
-    const data = JSON.parse(
-      localStorage.getItem("pokeApiSelectedItems") || "[]"
-    );
-
-    const updatedSelectedItems = data.filter((item: number) => item !== id);
-
-    localStorage.setItem(
-      "pokeApiSelectedItems",
-      JSON.stringify(updatedSelectedItems)
-    );
-
-    setSelectedItemsIdArray(updatedSelectedItems);
-  };
 
   return (
     <>
@@ -105,7 +38,7 @@ const RenderSelectedPokemons = () => {
           <Typography variant="subtitle1" component="div">
             {selectedValue && ` Sort by ${selectedValue}`}
           </Typography>
-          <Button variant="contained" color="success" onClick={handleSortClick}>
+          <Button variant="contained" color="success" onClick={handleSortOpen}>
             Sort by
           </Button>
 
@@ -117,7 +50,7 @@ const RenderSelectedPokemons = () => {
             data={keysToCompare}
           />
           <MUITable
-            columns={columns}
+            columns={RenderSelectedPokemonsColumns}
             data={sortedData}
             isFetching={isFetching}
             showPagination={false}

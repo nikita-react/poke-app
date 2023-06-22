@@ -5,10 +5,10 @@ import RenderSelectedPokemons from "../RenderSelectedPokemons";
 
 const PokemonComparisonPage = () => {
   return (
-    <Layout styles="flex justify-between flex-col gap-5	">
-      <Header  search={false}/>
-      <RenderSelectedPokemons />
-      <Footer />
+    <Layout data-testid="layout" styles="flex justify-between flex-col gap-5">
+      <Header data-testid="header" search={false} />
+      <RenderSelectedPokemons data-testid="render-selected-pokemons" />
+      <Footer data-testid="footer" />
     </Layout>
   );
 };
