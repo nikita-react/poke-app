@@ -2,7 +2,7 @@ import React from "react";
 import SignUp from "../components/Authentication/SignUp";
 import SingIn from "../components/Authentication/SingIn";
 import PokemonsPage from "../components/PokemonsPage"
-import NotFound from "../components/NotFoundPage";
+import NotFoundPage from "../components/NotFoundPage";
 import { Routes, Route } from "react-router-dom";
 import PrivateRoutes from "../components/PrivateRoute";
 import PublicRoutes from "../components/PublicRoute";
@@ -25,7 +25,7 @@ const Routing: React.FC = () => {
           <Route path="/pokemon/:id" element={<SinglePokemonPage />} />
           <Route path="/comparison" element={<PokemonsComparisonPage />} />
         </Route>
-        <Route path="*" element={<NotFound />} />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </>
   );

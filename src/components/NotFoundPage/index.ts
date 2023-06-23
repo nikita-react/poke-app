@@ -1,2 +1,2 @@
-import NotFound from "./NotFound";
-export default NotFound;
+import NotFoundPage from "./NotFoundPage";
+export default NotFoundPage;

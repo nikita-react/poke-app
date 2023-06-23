@@ -2,7 +2,7 @@ import React from "react";
 import Layout from "../Layout";
 import { Link } from "react-router-dom";
 
-const NotFound: React.FC = () => {
+const NotFoundPage: React.FC = () => {
   return (
     <Layout styles="h-screen">
       <main className="grid min-h-full px-6 py-24 bg-white place-items-center sm:py-32 lg:px-8">
@@ -34,4 +34,4 @@ const NotFound: React.FC = () => {
   );
 };
 
-export default NotFound;
+export default NotFoundPage;

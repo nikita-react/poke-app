@@ -1,14 +1,13 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
-import { useGQLQuery } from "../../hooks/useGQLQuery";
-import { GET_POKEMONS } from "../../queries";
 import { useParams } from "react-router-dom";
 import { useNavigate, useLocation } from "react-router-dom";
 import MUITable from "../MUIComponents/MUITable";
-import { PokemonsData } from "../../types";
 import { useQuery } from "@tanstack/react-query";
 import { RenderPokemonsColumns } from '../../constants';
 import PokemonPageWrapper from "../PokemonPageWrapper";
+import usePokemonsQuery from "../../hooks/usePokemonsQuery";
+import { getSelectedItemsFromLocalStorage, updateSelectedItemsInLocalStorage } from "../../utils/useLocalStorage";
 
 const PokemonsPage: React.FC = () => {
   const { id } = useParams();
@@ -16,25 +15,16 @@ const PokemonsPage: React.FC = () => {
   const location = useLocation();
   const [page, setPage] = useState(Number(id) > 1 ? Number(id) - 1 : 0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [selectedItems, setSelectedItems] = useState<number[]>(
-    JSON.parse(localStorage.getItem("pokeApiSelectedItems") || "[]")
-  );
+  const [selectedItems, setSelectedItems] = useState<number[]>(getSelectedItemsFromLocalStorage());
 
   const { data: searchData } = useQuery(['searchData'], () => {
     return ''
   });
 
-
-  const gqlVariables = {
-    offset: Number((page + 1) * rowsPerPage - rowsPerPage),
-    limit: rowsPerPage,
-    query: searchData ?? ''
-  };
-
-  const { data, refetch, isFetching } = useGQLQuery<PokemonsData>(
-    ["pokemons"],
-    GET_POKEMONS,
-    gqlVariables
+  const { data, refetch, isFetching } = usePokemonsQuery(
+    page,
+    rowsPerPage,
+    searchData
   );
 
   const handleChangePage = (event: any, newPage: number) => {
@@ -65,22 +55,17 @@ const PokemonsPage: React.FC = () => {
     if (event.target.checked) {
       setSelectedItems((prev) => {
         const updatedSelectedItems = [...prev, id];
-        handleLocalStorage("pokeApiSelectedItems", updatedSelectedItems);
+        updateSelectedItemsInLocalStorage(updatedSelectedItems);
         return updatedSelectedItems;
       });
     } else {
       setSelectedItems((prev) => {
         const updatedSelectedItems = prev.filter((item) => item !== id);
-        handleLocalStorage("pokeApiSelectedItems", updatedSelectedItems);
+        updateSelectedItemsInLocalStorage(updatedSelectedItems);
         return updatedSelectedItems;
       });
     }
   };
-  const handleLocalStorage = (name: string, data: number[]) => {
-    localStorage.setItem(name, JSON.stringify(data));
-  };
-
-
 
   return (
     <PokemonPageWrapper search={true}>

@@ -8,16 +8,12 @@ import PokemonPageWrapper from "../PokemonPageWrapper";
 
 const SinglePokemonPage = () => {
   const { id } = useParams();
-
   const { data, isLoading } = usePokemonQuery(id);
-
-
   const {
     pokemon_v2_pokemon,
     pokemon_v2_pokemonspeciesdescription,
     pokemon_v2_pokemonspeciesflavortext,
   } = data || {};
-
   const {
     id: pokemonId,
     name,
@@ -25,7 +21,6 @@ const SinglePokemonPage = () => {
     base_experience,
     is_default,
   } = pokemon_v2_pokemon?.[0] || {};
-
   const { description } = pokemon_v2_pokemonspeciesdescription?.[0] || {};
   const { flavor_text } = pokemon_v2_pokemonspeciesflavortext?.[0] || {};
 
