@@ -1,21 +1,19 @@
 import {
   useForm,
   SubmitHandler,
-  Controller,
   useFormState,
 } from "react-hook-form";
-import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import styles from "../../styles/Form.module.scss";
-import supabase from "../../client";
-import validationSchema from "../../validators/auth";
-import { useStyles } from "../../styles/InputUseStales";
+import styles from '../../../styles/Form.module.scss';
+import supabase from "../../../client";
+import validationSchema from "../../../validators/auth";
+import { useStyles } from "../../../styles/InputUseStales";
 import { Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import createAuthToast from "../Toasts/authToast";
-import Layout from "../Layout";
-import MUITextInput from "../MUITextInput";
+import createAuthToast from "../../Toasts/authToast";
+import Layout from "../../Layout";
+import MUITextInput from "../../MUIComponents/MUITextInput";
 
 type LoginValues = {
   email: string;

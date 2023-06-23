@@ -1,13 +1,13 @@
 import React from "react";
-import SignUp from "../components/SignUp";
-import SingIn from "../components/SingIn";
-import PokemonsPage from "../components/PokemonsPage";
-import NotFound from "../components/NotFound";
+import SignUp from "../components/Authentication/SignUp";
+import SingIn from "../components/Authentication/SingIn";
+import PokemonsPage from "../components/PokemonsPage"
+import NotFound from "../components/NotFoundPage";
 import { Routes, Route } from "react-router-dom";
 import PrivateRoutes from "../components/PrivateRoute";
 import PublicRoutes from "../components/PublicRoute";
 import SinglePokemonPage from "../components/SinglePokemonPage";
-import PokemonComparisonPage from "../components/PokemonComparisonPage";
+import PokemonsComparisonPage from "../components/PokemonsComparisonPage";
 import IndexPage from "../components/IndexPage";
 
 const Routing: React.FC = () => {
@@ -23,7 +23,7 @@ const Routing: React.FC = () => {
           <Route path="/pokemons" element={<PokemonsPage />} />
           <Route path="/pokemons/page/:id" element={<PokemonsPage />} />
           <Route path="/pokemon/:id" element={<SinglePokemonPage />} />
-          <Route path="/comparison" element={<PokemonComparisonPage />} />
+          <Route path="/comparison" element={<PokemonsComparisonPage />} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>

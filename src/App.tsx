@@ -1,6 +1,6 @@
 import React from "react";
 import Routing from "./Routes";
-import Loading from "./components/Loading";
+import Loading from "./components/MUIComponents/Loading";
 import Layout from "./components/Layout";
 import useSession from "./hooks/useSession";
 

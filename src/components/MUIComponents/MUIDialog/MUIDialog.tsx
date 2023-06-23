@@ -3,7 +3,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import Dialog from "@mui/material/Dialog";
-import { SimpleDialogProps, SortKey } from "../../types";
+import { SimpleDialogProps, SortKey } from "../../../types";
 
 const MUIDialog = (props: SimpleDialogProps) => {
   const { onClose, selectedValue, open, setSortKey, data } = props;

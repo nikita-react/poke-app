@@ -31,7 +31,7 @@ const MUITextInput: React.FC<ControllerProps> = ({
       defaultValue={defaultValue}
       render={({ field: { onChange, value } }) => (
         <TextField
-          type={name === "email" || name === "password" || name === "confirmPassword" ? "password" : "text"}
+          type={(name === "confirmPassword") ? "password" : (name ? name : "text")}
           id={name}
           label={label}
           variant="outlined"

@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ErrorBoundary } from 'react-error-boundary';
-import PokemonComparisonPage from '../components/PokemonComparisonPage';
+import PokemonComparisonPage from '../components/PokemonComparisonPageOld';
 
 const queryClient = new QueryClient();
 

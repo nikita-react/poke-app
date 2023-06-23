@@ -8,7 +8,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import { TableData, Pokemon } from "../../types";
+import { TableData, Pokemon } from "../../../types";
 import { useNavigate } from "react-router-dom";
 import { Skeleton } from "@mui/material";
 import { makeStyles } from "@mui/styles";
@@ -171,8 +171,8 @@ const MUITable: FC<TableData> = ({
             data
               ? data.pokemon_v2_pokemon_aggregate.aggregate.count
               : id
-              ? currentRowsPerPage * (currentPage + 1)
-              : currentRowsPerPage
+                ? currentRowsPerPage * (currentPage + 1)
+                : currentRowsPerPage
           }
           rowsPerPage={currentRowsPerPage}
           page={currentPage}
