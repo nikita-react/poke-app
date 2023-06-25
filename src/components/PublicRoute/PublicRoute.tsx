@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 const PublicRoutes: React.FC = () => {
   const sessionQuery = useQuery<boolean>(['session']);
 
-  return <>{!sessionQuery.data ? <Outlet /> : <Navigate to="/pokemons" />}</>;
+  return <div >{!sessionQuery.data ? <Outlet /> : <Navigate to="/pokemons" />}</div>;
 };
 
 export default PublicRoutes;

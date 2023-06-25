@@ -3,33 +3,27 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import Loading from "../MUIComponents/Loading";
-import usePokemonQuery from "../../hooks/usePokemonQuery";
+import usePokemonData from "../../hooks/usePokemonData";
 import PokemonPageWrapper from "../PokemonPageWrapper";
 
 const SinglePokemonPage = () => {
   const { id } = useParams();
-  const { data, isLoading } = usePokemonQuery(id);
-  const {
-    pokemon_v2_pokemon,
-    pokemon_v2_pokemonspeciesdescription,
-    pokemon_v2_pokemonspeciesflavortext,
-  } = data || {};
-  const {
-    id: pokemonId,
+  const { pokemonId,
     name,
     height,
     base_experience,
     is_default,
-  } = pokemon_v2_pokemon?.[0] || {};
-  const { description } = pokemon_v2_pokemonspeciesdescription?.[0] || {};
-  const { flavor_text } = pokemon_v2_pokemonspeciesflavortext?.[0] || {};
+    description,
+    flavor_text,
+    isLoading, } = usePokemonData(id);
+
 
   if (isLoading) {
     return <Loading />;
   }
   return (
     <PokemonPageWrapper search={false}>
-      <div className="container flex justify-start mx-auto">
+      <div data-testid="renderSinglePokemon-container" className="container flex justify-start mx-auto">
         <img
           className="w-1/2 shrink-0 h-fit "
           alt={name}

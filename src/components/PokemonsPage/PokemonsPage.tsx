@@ -68,7 +68,7 @@ const PokemonsPage: React.FC = () => {
   };
 
   return (
-    <PokemonPageWrapper search={true}>
+    <PokemonPageWrapper data-testid="pokemons" search={true}>
       <MUITable
         columns={RenderPokemonsColumns}
         data={data}

@@ -9,3 +9,21 @@ const PrivateRoutes: React.FC = () => {
 };
 
 export default PrivateRoutes;
+
+
+// import { render } from '@testing-library/react';
+// import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+// import PrivateRoute from '../PrivateRoute';
+
+// test('renders <Outlet /> when session is true', () => {
+//   const queryClient = new QueryClient();
+//   const { getByTestId } = render(
+//     <QueryClientProvider client={queryClient}>
+//       <PrivateRoute />
+//     </QueryClientProvider>
+//   );
+
+//   queryClient.setQueryData(['session'], true);
+
+//   expect(getByTestId('layout')).toBeInTheDocument();
+// });

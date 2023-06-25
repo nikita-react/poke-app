@@ -2,7 +2,7 @@ import { CircularProgress } from "@mui/joy";
 
 const Loading = () => {
   return (
-    <div className="mx-auto">
+    <div className="mx-auto" data-testid="global-loader">
       <CircularProgress
         color="primary"
         determinate={false}
