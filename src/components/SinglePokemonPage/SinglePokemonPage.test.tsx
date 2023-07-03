@@ -44,6 +44,7 @@ describe('SinglePokemonPage', () => {
         );
         expect(screen.getByTestId('renderSinglePokemon-container')).toBeInTheDocument();
     });
+
     it('should show loader', () => {
         spyOnSinglePokemonData.mockReturnValue({
             data: undefined,
@@ -115,6 +116,7 @@ describe('SinglePokemonPage', () => {
                 },
             },
         } = renderHook(() => usePokemonData(1));
+
         const result = {
             pokemonId,
             name,
@@ -129,7 +131,7 @@ describe('SinglePokemonPage', () => {
     });
 
 
-    // it('should render list correctly corresponding to BE response', () => {
-    //     // TODO: add data-testid to list and check if it is in the document
-    // });
+    it('should render list correctly corresponding to BE response', () => {
+        // TODO: add data-testid to list and check if it is in the document
+    });
 });

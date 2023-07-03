@@ -75,7 +75,7 @@ const MUITable: FC<TableData> = ({
               return (
                 <TableRow hover role="checkbox" tabIndex={-1} key={pokemon.id}>
                   {renderCheckbox && (
-                    <TableCell>
+                    <TableCell data-testid="checkbox">
                       <Checkbox
                         checked={checkboxState}
                         onChange={(event) =>
@@ -145,6 +145,7 @@ const MUITable: FC<TableData> = ({
                   {renderDeleteButton && (
                     <TableCell>
                       <Button
+                      data-testid="delete-button"
                         color="error"
                         variant="outlined"
                         startIcon={<DeleteIcon />}
@@ -165,6 +166,7 @@ const MUITable: FC<TableData> = ({
       </TableContainer>
       {showPagination && (
         <TablePagination
+        data-testid="table-pagination"
           rowsPerPageOptions={[10, 25, 100]}
           component="div"
           count={

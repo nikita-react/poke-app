@@ -16,7 +16,7 @@ root.render(
   <React.StrictMode>
     <QueryClientProvider client={client}>
       <BrowserRouter>
-        <App />
+        <App data-testid="app" />
       </BrowserRouter>
     </QueryClientProvider>
   </React.StrictMode>

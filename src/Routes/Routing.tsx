@@ -4,7 +4,7 @@ import SingIn from "../components/Authentication/SingIn";
 import PokemonsPage from "../components/PokemonsPage"
 import NotFoundPage from "../components/NotFoundPage";
 import { Routes, Route } from "react-router-dom";
-import PrivateRoutes from "../components/PrivateRoute";
+import PrivateRoutes from "../components/PrivateRoutes";
 import PublicRoutes from "../components/PublicRoute";
 import SinglePokemonPage from "../components/SinglePokemonPage";
 import PokemonsComparisonPage from "../components/PokemonsComparisonPage";

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
   AppBar,
   Toolbar,
@@ -59,8 +59,6 @@ const Header = ({ search }: { search: boolean }) => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const queryClient = useQueryClient();
 
-
-
   const toggleDrawer = (isOpen: boolean) => () => {
     setIsDrawerOpen(isOpen);
   };
@@ -68,7 +66,6 @@ const Header = ({ search }: { search: boolean }) => {
   const handleSearch = (value: string) => {
     queryClient.setQueryData(['searchData'], value);
   }
-
 
   const links = [
     { label: "Pokemons", href: "/pokemons/page/1" },
@@ -114,7 +111,7 @@ const Header = ({ search }: { search: boolean }) => {
         <Toolbar className="justify-between ">
           {navbarLinks}
           {search &&
-            <Search >
+            <Search data-testid="search">
               <SearchIconWrapper>
                 <SearchIcon />
               </SearchIconWrapper>

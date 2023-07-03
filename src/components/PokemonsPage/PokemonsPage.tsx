@@ -26,7 +26,8 @@ const PokemonsPage: React.FC = () => {
     rowsPerPage,
     searchData
   );
-
+   console.log(data);
+   
   const handleChangePage = (event: any, newPage: number) => {
     setPage(newPage);
     const segments = location.pathname.split("/");
