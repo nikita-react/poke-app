@@ -87,7 +87,7 @@ const MUITable: FC<TableData> = ({
                   )}
                   <TableCell>
                     {isFetching ? (
-                      <Skeleton variant="text" sx={{ fontSize: "1rem" }} />
+                      <Skeleton data-testid="skeleton" variant="text" sx={{ fontSize: "1rem" }} />
                     ) : (
                       pokemon.id
                     )}
@@ -98,7 +98,7 @@ const MUITable: FC<TableData> = ({
                       onClick={() => navigate(`/pokemon/${pokemon.id}`)}
                     >
                       {isFetching ? (
-                        <Skeleton variant="text" sx={{ fontSize: "1rem" }} />
+                        <Skeleton data-testid="skeleton" variant="text" sx={{ fontSize: "1rem" }} />
                       ) : (
                         pokemon.name
                       )}
@@ -106,14 +106,14 @@ const MUITable: FC<TableData> = ({
                   </TableCell>
                   <TableCell className="!text-right">
                     {isFetching ? (
-                      <Skeleton variant="text" sx={{ fontSize: "1rem" }} />
+                      <Skeleton data-testid="skeleton" variant="text" sx={{ fontSize: "1rem" }} />
                     ) : (
                       pokemon.height
                     )}
                   </TableCell>
                   <TableCell className="!text-right">
                     {isFetching ? (
-                      <Skeleton variant="text" sx={{ fontSize: "1rem" }} />
+                      <Skeleton data-testid="skeleton" variant="text" sx={{ fontSize: "1rem" }} />
                     ) : (
                       pokemon.base_experience
                     )}
@@ -121,14 +121,14 @@ const MUITable: FC<TableData> = ({
                   <TableCell className="!text-right">
                     {" "}
                     {isFetching ? (
-                      <Skeleton variant="text" sx={{ fontSize: "1rem" }} />
+                      <Skeleton data-testid="skeleton" variant="text" sx={{ fontSize: "1rem" }} />
                     ) : (
                       isDefault
                     )}
                   </TableCell>
                   <TableCell>
                     {isFetching ? (
-                      <Skeleton
+                      <Skeleton data-testid="skeleton"
                         variant="rectangular"
                         className={`${classes.skeleton} mx-auto`}
                       />

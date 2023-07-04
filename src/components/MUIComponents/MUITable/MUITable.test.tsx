@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, getAllByTestId, getAllByText } from '@testing-library/react';
 import MUITable from '../MUITable';
 import {RenderPokemonsColumns} from "../../../constants";
 import { BrowserRouter } from 'react-router-dom';
@@ -83,8 +83,11 @@ describe('MUITable', () => {
         }
         }
         }
+        
+        const handleChangeSelectedItems = jest.fn();
+
   test('renders checkboxes when renderCheckbox is true', () => {
-    const handleChangeSelectedItems = jest.fn();
+    
 
     render(
         <BrowserRouter>
@@ -105,7 +108,7 @@ describe('MUITable', () => {
   });
   
   test('does not render checkboxes when renderCheckbox is false', () => {
-    const handleChangeSelectedItems = jest.fn();
+    
 
     render(
         <BrowserRouter>
@@ -125,7 +128,7 @@ describe('MUITable', () => {
   });
 
   test('render delete button' , () => {
-    const handleChangeSelectedItems = jest.fn();
+    
 
     render(
         <BrowserRouter>
@@ -145,7 +148,7 @@ describe('MUITable', () => {
   })
 
   test('doesnt render delete button' , () => {
-    const handleChangeSelectedItems = jest.fn();
+    
 
     render(
         <BrowserRouter>
@@ -165,7 +168,7 @@ describe('MUITable', () => {
   })
 
   test('show pagination' , () => {
-    const handleChangeSelectedItems = jest.fn();
+    
 
     render(
         <BrowserRouter>
@@ -184,7 +187,7 @@ describe('MUITable', () => {
   })
 
   test(' doesnt show pagination' , () => {
-    const handleChangeSelectedItems = jest.fn();
+    
 
     render(
         <BrowserRouter>
@@ -201,4 +204,95 @@ describe('MUITable', () => {
     const pagination = screen.queryByTestId('table-pagination');
     expect(pagination).not.toBeInTheDocument();
   })
+
+  test('should render Skeleton when isFetching is true', () => {
+    const { queryByText} = render(
+      <BrowserRouter>
+      <MUITable
+        columns={RenderPokemonsColumns}
+          showPagination={false}
+          data={data}
+          renderCheckbox={false} 
+          renderDeleteButton={false}
+          handleChangeSelectedItems={handleChangeSelectedItems}
+          isFetching={true}
+      />
+      </BrowserRouter>
+    );
+
+    const skeletonElements = screen.getAllByTestId('skeleton');
+    expect(skeletonElements.length).toBeGreaterThan(0);
+
+    data.pokemon_v2_pokemon.forEach((pokemon) => {
+      const pokemonIdCell = queryByText(pokemon.id.toString());
+      expect(pokemonIdCell).toBeNull();
+
+      const pokemonNameCell = queryByText(pokemon.name);
+      expect(pokemonNameCell).toBeNull();
+
+      const pokemonHeightCell = queryByText(pokemon.height.toString());
+      expect(pokemonHeightCell).toBeNull();
+
+      const pokemonBaseExperienceCell = queryByText(
+        pokemon.base_experience.toString()
+      );
+      expect(pokemonBaseExperienceCell).toBeNull();
+
+      const pokemonIsDefaultCell = queryByText(
+        pokemon.is_default ? 'Yes' : 'No'
+      );
+      expect(pokemonIsDefaultCell).toBeNull();
+    });
+  });
+
+  test('should render real data when isFetching is false', () => {
+
+    const { getAllByText} = render(
+      <BrowserRouter>
+      <MUITable
+        columns={RenderPokemonsColumns}
+          showPagination={false}
+          data={data}
+          renderCheckbox={false} 
+          renderDeleteButton={false}
+          handleChangeSelectedItems={handleChangeSelectedItems}
+          isFetching={false}
+      />
+      </BrowserRouter>
+    );
+
+    const skeletonElements = screen.queryAllByTestId('skeleton');
+    expect(skeletonElements.length).toBe(0);
+
+    data.pokemon_v2_pokemon.forEach((pokemon) => {
+      const pokemonIdCell = getAllByText(pokemon.id.toString());
+      pokemonIdCell.forEach((cell) => {
+        expect(cell).toBeInTheDocument();
+      })
+
+      const pokemonNameCell = getAllByText(pokemon.name);
+      pokemonNameCell.forEach((cell) => {
+        expect(cell).toBeInTheDocument();
+      })
+
+      const pokemonHeightCell = getAllByText(pokemon.height.toString());
+      pokemonHeightCell.forEach((cell) => {
+        expect(cell).toBeInTheDocument();
+      })
+
+      const pokemonBaseExperienceCell = getAllByText(
+        pokemon.base_experience.toString()
+      );
+      pokemonBaseExperienceCell.forEach((cell) => {
+        expect(cell).toBeInTheDocument();
+      })
+
+      const pokemonIsDefaultCell = getAllByText(
+        pokemon.is_default ? 'Yes' : 'No'
+      );
+      pokemonIsDefaultCell.forEach((cell) => {
+        expect(cell).toBeInTheDocument();
+      })
+    });
+  });
 });
