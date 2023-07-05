@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import MUIDialog from "../MUIComponents/MUIDialog";
@@ -16,13 +16,13 @@ const PokemonsComparisonPage = () => {
   const [open, setOpen] = useState(false);
   const [selectedValue, setSelectedValue] = useState<SortKey>("Default");
   const [selectedItemsIdArray, deleteSelectedPokemon] = useSelectedPokemons();
-  const { data, isFetching } = useSelectedPokemonsQuery(selectedItemsIdArray);
-  
+  const { data, isFetching, refetch } = useSelectedPokemonsQuery(selectedItemsIdArray);
+
   const sortedData = usePokemonSort(
     data,
     selectedValue
   );
-
+    
   const handleSortOpen = () => {
     setOpen(true);
   };
@@ -31,7 +31,9 @@ const PokemonsComparisonPage = () => {
     setOpen(false);
     setSelectedValue(value);
   };
-
+  useEffect(() => {
+    refetch()
+  }, [selectedItemsIdArray])
 
   return (
     <PokemonPageWrapper search={false}>

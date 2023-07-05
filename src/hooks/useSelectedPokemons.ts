@@ -6,6 +6,7 @@ const useSelectedPokemons = (): [number[], (id: number) => void] => {
   );
 
   const deleteSelectedPokemon = (id: number): void => {
+    
     const data: number[] = JSON.parse(
       localStorage.getItem("pokeApiSelectedItems") || "[]"
     );
@@ -14,7 +15,6 @@ const useSelectedPokemons = (): [number[], (id: number) => void] => {
       "pokeApiSelectedItems",
       JSON.stringify(updatedSelectedItems)
     );
-
     setSelectedItemsIdArray(updatedSelectedItems);
   };
 

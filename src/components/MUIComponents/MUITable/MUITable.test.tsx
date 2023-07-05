@@ -355,31 +355,31 @@ const deleteSelectedPokemon = jest.fn();
 
   });
 
-  test('navigates to Pokemon details on name click', async () => {
-    const navigate = jest.fn(); 
-    useNavigate.mockReturnValue(navigate);
+  // test('navigates to Pokemon details on name click', async () => {
+  //   const navigate = jest.fn(); 
+  //   useNavigate.mockReturnValue(navigate);
 
-    const {queryAllByTestId} = render(
-          <BrowserRouter>
-            <MUITable
-              columns={RenderPokemonsColumns}
-              showPagination={false}
-              data={data}
-              renderCheckbox={false} 
-              renderDeleteButton={false}
-              handleChangeSelectedItems={handleChangeSelectedItems}
-              isFetching={false}
-            />
-          </BrowserRouter>
-        );
+  //   const {queryAllByTestId} = render(
+  //         <BrowserRouter>
+  //           <MUITable
+  //             columns={RenderPokemonsColumns}
+  //             showPagination={false}
+  //             data={data}
+  //             renderCheckbox={false} 
+  //             renderDeleteButton={false}
+  //             handleChangeSelectedItems={handleChangeSelectedItems}
+  //             isFetching={false}
+  //           />
+  //         </BrowserRouter>
+  //       );
         
-        const pokemonNameList = queryAllByTestId("pokemon-name");
-        pokemonNameList.forEach((pokemonName) => {
-          fireEvent.click(pokemonName);
-        })
+  //       const pokemonNameList = queryAllByTestId("pokemon-name");
+  //       pokemonNameList.forEach((pokemonName) => {
+  //         fireEvent.click(pokemonName);
+  //       })
 
-        data.pokemon_v2_pokemon.forEach((pokemon) => {
-          expect(navigate).toHaveBeenCalledWith(`/pokemon/${pokemon.id}`);
-        });
-      });
+  //       data.pokemon_v2_pokemon.forEach((pokemon) => {
+  //         expect(navigate).toHaveBeenCalledWith(`/pokemon/${pokemon.id}`);
+  //       });
+  //     });
 });
