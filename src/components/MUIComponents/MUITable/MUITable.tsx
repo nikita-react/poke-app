@@ -73,10 +73,11 @@ const MUITable: FC<TableData> = ({
               );
 
               return (
-                <TableRow hover role="checkbox" tabIndex={-1} key={pokemon.id}>
+                <TableRow  hover role="checkbox" tabIndex={-1} key={pokemon.id}>
                   {renderCheckbox && (
-                    <TableCell data-testid="checkbox">
+                    <TableCell     >
                       <Checkbox
+                   data-testid="checkbox"
                         checked={checkboxState}
                         onChange={(event) =>
                           handleChangeSelectedItems &&
@@ -92,8 +93,9 @@ const MUITable: FC<TableData> = ({
                       pokemon.id
                     )}
                   </TableCell>
-                  <TableCell>
+                  <TableCell   >
                     <span
+                    data-testid="pokemon-name"
                       className="cursor-pointer hover:underline "
                       onClick={() => navigate(`/pokemon/${pokemon.id}`)}
                     >

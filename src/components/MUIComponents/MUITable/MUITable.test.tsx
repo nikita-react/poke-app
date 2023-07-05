@@ -1,7 +1,13 @@
-import { render, screen, fireEvent, getAllByTestId, getAllByText } from '@testing-library/react';
+import { render, screen, fireEvent, queryAllByText, queryAllByTestId } from '@testing-library/react';
 import MUITable from '../MUITable';
-import {RenderPokemonsColumns} from "../../../constants";
+import {RenderPokemonsColumns, RenderSelectedPokemonsColumns} from "../../../constants";
 import { BrowserRouter } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
+
+jest.mock("react-router-dom", () => ({
+  ...jest.requireActual("react-router-dom") as any,
+  useNavigate: jest.fn(),
+}));
 
 describe('MUITable', () => {
     const data = {
@@ -295,4 +301,85 @@ describe('MUITable', () => {
       })
     });
   });
+  test('should call handleChangeSelectedItems with correct arguments when Checkbox value changes', async () => {
+
+    const { container } = render(
+      <BrowserRouter>
+        <MUITable
+          columns={RenderPokemonsColumns}
+          showPagination={false}
+          data={data}
+          renderCheckbox={true} 
+          renderDeleteButton={false}
+          handleChangeSelectedItems={handleChangeSelectedItems}
+          isFetching={false}
+        />
+      </BrowserRouter>
+    );
+    
+    const checkboxes = container.querySelectorAll('input[type="checkbox"]');
+
+    checkboxes.forEach((checkbox) => {
+      fireEvent.click(checkbox);
+    });
+
+    expect(handleChangeSelectedItems).toHaveBeenCalledTimes(checkboxes.length);
+
+  });
+
+  test('should call deleteSelectedPokemon with correct arguments when delete button is clicked', async () => {
+const deleteSelectedPokemon = jest.fn();
+
+    const {queryAllByTestId} = render(
+      <BrowserRouter>
+        <MUITable
+          columns={RenderSelectedPokemonsColumns}
+          showPagination={false}
+          data={data}
+          renderCheckbox={false} 
+          renderDeleteButton={true}
+          handleChangeSelectedItems={handleChangeSelectedItems}
+          isFetching={false}
+          deleteSelectedPokemon={deleteSelectedPokemon}
+        />
+      </BrowserRouter>
+    );
+    
+    const deleteButtonsList = queryAllByTestId('delete-button');
+
+    deleteButtonsList.forEach((btn) => {
+      fireEvent.click(btn);
+    });
+
+    expect(deleteSelectedPokemon).toHaveBeenCalledTimes(deleteButtonsList.length);
+
+  });
+
+  test('navigates to Pokemon details on name click', async () => {
+    const navigate = jest.fn(); 
+    useNavigate.mockReturnValue(navigate);
+
+    const {queryAllByTestId} = render(
+          <BrowserRouter>
+            <MUITable
+              columns={RenderPokemonsColumns}
+              showPagination={false}
+              data={data}
+              renderCheckbox={false} 
+              renderDeleteButton={false}
+              handleChangeSelectedItems={handleChangeSelectedItems}
+              isFetching={false}
+            />
+          </BrowserRouter>
+        );
+        
+        const pokemonNameList = queryAllByTestId("pokemon-name");
+        pokemonNameList.forEach((pokemonName) => {
+          fireEvent.click(pokemonName);
+        })
+
+        data.pokemon_v2_pokemon.forEach((pokemon) => {
+          expect(navigate).toHaveBeenCalledWith(`/pokemon/${pokemon.id}`);
+        });
+      });
 });

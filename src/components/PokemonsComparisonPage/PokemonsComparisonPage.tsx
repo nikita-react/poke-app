@@ -17,6 +17,7 @@ const PokemonsComparisonPage = () => {
   const [selectedValue, setSelectedValue] = useState<SortKey>("Default");
   const [selectedItemsIdArray, deleteSelectedPokemon] = useSelectedPokemons();
   const { data, isFetching } = useSelectedPokemonsQuery(selectedItemsIdArray);
+  
   const sortedData = usePokemonSort(
     data,
     selectedValue
