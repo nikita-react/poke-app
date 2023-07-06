@@ -355,31 +355,62 @@ const deleteSelectedPokemon = jest.fn();
 
   });
 
-  // test('navigates to Pokemon details on name click', async () => {
-  //   const navigate = jest.fn(); 
-  //   useNavigate.mockReturnValue(navigate);
+  test('navigates to Pokemon details on name click', async () => {
+    const navigate = jest.fn(); 
+    (useNavigate as jest.Mock).mockImplementation(() => navigate);
 
-  //   const {queryAllByTestId} = render(
-  //         <BrowserRouter>
-  //           <MUITable
-  //             columns={RenderPokemonsColumns}
-  //             showPagination={false}
-  //             data={data}
-  //             renderCheckbox={false} 
-  //             renderDeleteButton={false}
-  //             handleChangeSelectedItems={handleChangeSelectedItems}
-  //             isFetching={false}
-  //           />
-  //         </BrowserRouter>
-  //       );
+
+    const {queryAllByTestId} = render(
+          <BrowserRouter>
+            <MUITable
+              columns={RenderPokemonsColumns}
+              showPagination={false}
+              data={data}
+              renderCheckbox={false} 
+              renderDeleteButton={false}
+              handleChangeSelectedItems={handleChangeSelectedItems}
+              isFetching={false}
+            />
+          </BrowserRouter>
+        );
         
-  //       const pokemonNameList = queryAllByTestId("pokemon-name");
-  //       pokemonNameList.forEach((pokemonName) => {
-  //         fireEvent.click(pokemonName);
-  //       })
+        const pokemonNameList = queryAllByTestId("pokemon-name");
+        pokemonNameList.forEach((pokemonName) => {
+          fireEvent.click(pokemonName);
+        })
 
-  //       data.pokemon_v2_pokemon.forEach((pokemon) => {
-  //         expect(navigate).toHaveBeenCalledWith(`/pokemon/${pokemon.id}`);
-  //       });
-  //     });
+        data.pokemon_v2_pokemon.forEach((pokemon) => {
+          expect(navigate).toHaveBeenCalledWith(`/pokemon/${pokemon.id}`);
+        });
+      });
+
+      test('calls handleChangePage with correct arguments on page change', () => {
+        const handleChangePage = jest.fn();
+        const page = 1; 
+        const rowsPerPage = 10; 
+      
+        render(
+          <BrowserRouter>
+            <MUITable
+              columns={RenderPokemonsColumns}
+              showPagination={true}
+              data={data}
+              renderCheckbox={false}
+              renderDeleteButton={false}
+              handleChangeSelectedItems={handleChangeSelectedItems}
+              isFetching={false}
+              page={page}
+              rowsPerPage={rowsPerPage}
+              handleChangePage={handleChangePage}
+            />
+          </BrowserRouter>
+        );
+          
+        const nextButton = screen.getByTitle('Go to next page');
+        fireEvent.click(nextButton);
+      
+        expect(handleChangePage).toHaveBeenCalledTimes(1);
+        expect(handleChangePage).toHaveBeenCalledWith(expect.anything(), 2);
+      });
+      
 });
