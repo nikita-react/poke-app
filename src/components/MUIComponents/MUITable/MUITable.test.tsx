@@ -4,8 +4,6 @@ import { RenderPokemonsColumns, RenderSelectedPokemonsColumns } from "../../../c
 import { BrowserRouter } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
 import userEvent from '@testing-library/user-event';
-import PokemonsPage from '../../PokemonsPage';
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 
 jest.mock("react-router-dom", () => ({
