@@ -7,7 +7,7 @@ import Button from "@mui/material/Button";
 import styles from '../../../styles/Form.module.scss';
 import supabase from "../../../client";
 import validationSchema from "../../../validators/auth";
-import { useStyles } from "../../../styles/InputUseStales";
+import { useStyles } from "../../../styles/InputUseStyles";
 import { Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";

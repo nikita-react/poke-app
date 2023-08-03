@@ -6,6 +6,7 @@ import Dialog from "@mui/material/Dialog";
 import { SimpleDialogProps, SortKey } from "../../../types";
 
 const MUIDialog = (props: SimpleDialogProps) => {
+
   const { onClose, selectedValue, open, setSortKey, data } = props;
 
   const handleClose = () => onClose(selectedValue as SortKey);
@@ -16,7 +17,7 @@ const MUIDialog = (props: SimpleDialogProps) => {
   };
 
   return (
-    <Dialog onClose={handleClose} open={open}>
+    <Dialog data-testid="dialog" onClose={handleClose} open={open}>
       <List sx={{ pt: 0 }}>
         {data.map(({ key, name }) => (
           <ListItem disableGutters key={key}>
