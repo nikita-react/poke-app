@@ -107,7 +107,7 @@ const Header = ({ search }: { search: boolean }) => {
 
   return (
     <>
-      <AppBar position="static">
+      <AppBar data-testid="header" position="static">
         <Toolbar className="justify-between ">
           {navbarLinks}
           {search &&

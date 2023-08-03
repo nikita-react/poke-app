@@ -10,10 +10,10 @@ type PokemonPageWrapperProps = {
 };
 const PokemonPageWrapper: React.FC<PokemonPageWrapperProps> = ({ children, search }) => {
     return (
-        <Layout data-testid="layout" styles="flex justify-between flex-col gap-5">
-            <Header data-testid="header" search={search} />
+        <Layout data-testid="layout2"  styles="flex justify-between flex-col gap-5">
+            <Header search={search} />
             {children}
-            <Footer data-testid="footer" />
+            <Footer   />
         </Layout>
     );
 };
