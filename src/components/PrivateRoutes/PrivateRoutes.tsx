@@ -4,7 +4,6 @@ import { useQuery } from "@tanstack/react-query";
 
 const PrivateRoutes: React.FC = () => {
   const sessionQuery = useQuery<boolean>(['session']);
-  console.log(sessionQuery);
 
   return <>{sessionQuery.data ?
     <Outlet />

@@ -32,6 +32,7 @@ const SignUp = () => {
 
   const onSubmit: SubmitHandler<RegistrationValues> = (dataForm) => {
     const { email, password } = dataForm;
+
     registration(email, password);
   };
 

@@ -1,8 +1,8 @@
-// hooks/customHooks.js
 import { useState, useEffect } from "react";
 import { Pokemon, SortKey, ComparisonPagePokemonData } from "../types";
 
- const usePokemonSort = (data: ComparisonPagePokemonData | undefined, selectedValue: SortKey) => {
+ const usePokemonSort = (data: ComparisonPagePokemonData | any, selectedValue: SortKey) => {
+  
     const sortPokemonData = (data: Pokemon[], selectedValue: SortKey) => {
         switch (selectedValue) {
           case "Height: High-Low":

@@ -22,7 +22,7 @@ const PokemonsComparisonPage = () => {
     data,
     selectedValue
   );
-    
+
   const handleSortOpen = () => {
     setOpen(true);
   };

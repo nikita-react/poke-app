@@ -37,4 +37,27 @@ test ("check layout styles", () => {
 
       expect(stylesProp).toBe("min-h-screen flex justify-between flex-col gap-5");
     })
+
+    test("Check the search if props is true", () => {
+        const {getByTestId} =  render(
+             <QueryClientProvider client={queryClient}>
+             <BrowserRouter>
+                 <PokemonPageWrapper children={<></>} search={true} />
+             </BrowserRouter>
+             </QueryClientProvider>
+         );
+         const search = getByTestId("search");
+         expect(search).toBeInTheDocument();
+ })
+ test("Check the search if props is false", () => {
+    const {queryByTestId} =  render(
+         <QueryClientProvider client={queryClient}>
+         <BrowserRouter>
+             <PokemonPageWrapper children={<></>} search={false} />
+         </BrowserRouter>
+         </QueryClientProvider>
+     );
+     const search = queryByTestId("search");
+     expect(search).not.toBeInTheDocument();
+})
 });

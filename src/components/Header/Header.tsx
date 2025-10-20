@@ -6,6 +6,7 @@ import {
   Drawer,
   List,
   ListItem,
+  Button
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -13,6 +14,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
 import { useQueryClient } from "@tanstack/react-query";
+import logout from "../Authentication/LogOut";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -90,6 +92,7 @@ const Header = ({ search }: { search: boolean }) => {
       >
         <MenuIcon />
       </IconButton>
+
     </>
   );
 
@@ -110,18 +113,23 @@ const Header = ({ search }: { search: boolean }) => {
       <AppBar data-testid="header" position="static">
         <Toolbar className="justify-between ">
           {navbarLinks}
-          {search &&
-            <Search data-testid="search">
-              <SearchIconWrapper>
-                <SearchIcon />
-              </SearchIconWrapper>
-              <StyledInputBase
-                onChange={(e) => handleSearch(e.target.value)}
-                placeholder="Search…"
-                inputProps={{ "aria-label": "search" }}
-              />
-            </Search>
-          }
+          <div className="flex gap-3">
+            {search &&
+              <Search data-testid="search">
+                <SearchIconWrapper>
+                  <SearchIcon />
+                </SearchIconWrapper>
+                <StyledInputBase
+                  onChange={(e) => handleSearch(e.target.value)}
+                  placeholder="Search…"
+                  inputProps={{ "aria-label": "search" }}
+                />
+              </Search>
+            }
+            <Button variant="contained" onClick={() => logout()}>Log out</Button>
+          </div>
+
+
         </Toolbar>
       </AppBar>
       <Drawer anchor="left" open={isDrawerOpen} onClose={toggleDrawer(false)}>
