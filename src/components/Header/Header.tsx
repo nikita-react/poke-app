@@ -15,6 +15,9 @@ import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
 import { useQueryClient } from "@tanstack/react-query";
 import logout from "../Authentication/LogOut";
+import { useQuery } from '@tanstack/react-query';
+
+
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -57,7 +60,10 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
+
+
 const Header = ({ search }: { search: boolean }) => {
+  const { data: isLoggedIn = false } = useQuery(['session']);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const queryClient = useQueryClient();
 
@@ -126,7 +132,9 @@ const Header = ({ search }: { search: boolean }) => {
                 />
               </Search>
             }
-            <Button variant="contained" onClick={() => logout()}>Log out</Button>
+
+            {isLoggedIn ? <Button variant="contained" onClick={logout}>Log out</Button> : null}
+
           </div>
 
 
